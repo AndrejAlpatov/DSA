@@ -30,15 +30,17 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        speech_text = "Willkommen zum Datenbank-Durchstich!" \
-                      " Sage 'steht {nameDB} auf der datenbank' " \
-                      "oder 'welche namen stehen auf der datenbank'"
+        speech_text = "Willkommen zum Mensa-Skill des studierenden Werk der Vorderpfalz! " \
+                      "Wir bieten ihnen hier die Möglichkeit, Informationen zur Mensa und dem Kioskangebot zu erfragen." \
+                      "Frage Sie mich zum Beispiel was es Heute zum essen gibt."
+
+        #update_database() TODO: function in line 209
 
         handler_input.response_builder.speak(speech_text).set_card(
             SimpleCard("Hello World", speech_text)).set_should_end_session(
             False)
         return handler_input.response_builder.response
-#TODO: etwas
+
 
 class HelpIntentHandler(AbstractRequestHandler):
     """Handler for Help Intent."""
@@ -203,6 +205,17 @@ class ReadNameFromDBHandler(AbstractRequestHandler):
         handler_input.response_builder.speak(speech_text).ask(speech_text)
         return handler_input.response_builder.response
 
+#TODO: implementation of update_database()
+#def update_database():
+    # tcpcon = tcpcon()
+    # if(tcpcon.check_dir()): #true wenn datei vorhanden
+        # filenames = tcpcon.get_filenames() -> liste aller dokumente?
+        # download file -> for schleife die alle dokumente runterläd
+        # for filename in filenames:
+            # tcpcon.mv("filename,../Done") -> schleife die Files aus Filename in Done ordner verschiebt
+        # xmlreader = xmlreader()
+        # for filename in filenames:
+            # xmlreader.get_data("res/"+filename) -> for schleife die aus allen neuen dokumenten die daten liest und auf db schreibt
 
 
 
