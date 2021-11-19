@@ -1,4 +1,3 @@
-#TODO implementation of class XMLReader
 import xml.dom.minidom
 import datetime
 import pymong as py
