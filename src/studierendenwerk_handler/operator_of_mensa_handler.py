@@ -20,6 +20,7 @@ class OperatorOfMensaIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
+        # Liste möglicher Antworten
         speech_text_list = ["Die Mensa wird von dem Studierendenwerk Vorderpfalz betrieben.",
                             "Die Mensa wird von dem Studierendenwerk Vorderpfalz geleitet.",
                             "Das Studierendenwerk Vorderpfalz ist für die Mensa verantwortlich.",
@@ -27,6 +28,7 @@ class OperatorOfMensaIntentHandler(AbstractRequestHandler):
 
         list_index = randint(0, len(speech_text_list) - 1)
 
+        # zufällige Antwort ausgeben
         speech_text = speech_text_list[list_index]
         reprompt = "Wenn du mehr über das Studierendenwerk willen möchtest, sage \" was macht" \
                    "das Studierendenwerk noch?\""
