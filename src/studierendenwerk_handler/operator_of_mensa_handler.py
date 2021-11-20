@@ -28,6 +28,8 @@ class OperatorOfMensaIntentHandler(AbstractRequestHandler):
         list_index = randint(0, len(speech_text_list) - 1)
 
         speech_text = speech_text_list[list_index]
+        reprompt = "Wenn du mehr über das Studierendenwerk willen möchtest, sage \" was macht" \
+                   "das Studierendenwerk noch?\""
 
-        handler_input.response_builder.speak(speech_text).ask(speech_text)
+        handler_input.response_builder.speak(speech_text).ask(reprompt)
         return handler_input.response_builder.response
