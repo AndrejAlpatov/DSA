@@ -19,8 +19,13 @@ class StudierendenWerkActivityIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
-        speech_text = ""
-        reprompt = ""
+        speech_text = "Das Studierendenwerk Vorderpfalz kümmert sich um die Mensa, studentisches " \
+                      "Wohnen, Unterstützung bei einem Studium mit Kind, Sozialberatung, " \
+                      "Psychologische Beratung, Studienfinanzierungsberatung, Förderung studentischer " \
+                      "Projekte, Internationales, Studi-Jobs, Verwaltung eines schwarzen Brettes und " \
+                      "Karriere."
+        reprompt = "Willst du noch mehr über das Studierendenwerk Vorderpfalz erfahren? Dann sage \"Sage " \
+                   "mir Informationen zum Studierendenwerk.\""
 
         handler_input.response_builder.speak(speech_text).ask(reprompt)
         return handler_input.response_builder.response
