@@ -20,6 +20,7 @@ class NamenDerDBAusgebenHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
 
         xclient = MongoClient("mongodb+srv://testuser:12345@cluster0.ti92d.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+        #xclient = MongoClient("mongodb+srv://Andrej:j$6KCvV_3T-eP3w@cluster0.ej8ie.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
         database = xclient.get_database("speiseplan")
 
         datumcol = database["datum"]
