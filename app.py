@@ -1,4 +1,6 @@
 from src.kiosk_handler.namen_ausgeben_handler import NamenDerDBAusgebenHandler
+from src.kiosk_handler.additional_kiosk_questions_handler import IsThereQuestionsHandler, OwnCupInKioskHandler
+from src.kiosk_handler.kiosk_menu_intent_handler import KioskMenuWhatIntentHandler, KioskMenuIfIntentHandler
 
 
 
@@ -219,6 +221,10 @@ sb.add_request_handler(RechenIntentHandler())
 sb.add_request_handler(NamenAufDBSchreibenHandler())
 sb.add_request_handler(ReadNameFromDBHandler())
 sb.add_request_handler(NamenDerDBAusgebenHandler())
+sb.add_request_handler(IsThereQuestionsHandler())
+sb.add_request_handler(OwnCupInKioskHandler())
+sb.add_request_handler(KioskMenuWhatIntentHandler())
+sb.add_request_handler(KioskMenuIfIntentHandler())
 
 skill_adapter = SkillAdapter(
     skill=sb.create(), skill_id=1, app=app)
