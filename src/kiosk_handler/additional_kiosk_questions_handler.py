@@ -16,6 +16,7 @@ class IsThereQuestionsHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
+        # Datenbankzugriff und Empfang der Liste für die Antwort
         client = MongoClient('mongodb+srv://Dev:MAHy87WAmv8NI6Kq@mensaskill.2yqml.mongodb.net/'
                              'myFirstDatabase?retryWrites=true&w=majority')
         database = client.get_database("MensaSkill")
@@ -23,9 +24,11 @@ class IsThereQuestionsHandler(AbstractRequestHandler):
         answers = db_collection.find_one({})
         speech_text_list = answers['IS_KIOSK_KAFFEEAUTOMAT_ARRAY']
 
+        # Zufällige Antwortauswahl aus der Liste
         list_index = randint(0, len(speech_text_list) - 1)
         speech_text = speech_text_list[list_index]
 
+        # Output
         handler_input.response_builder.speak(speech_text)
         return handler_input.response_builder.ask(speech_text).response
 
@@ -35,7 +38,7 @@ class IsThereQuestionsHandler(AbstractRequestHandler):
 
 
 class OwnCupInKioskHandler(AbstractRequestHandler):
-    """Handler um auf die Verfügbarkeit des Kaffeeautomaten zu antworten"""
+    """Handler fuer die Erlaubnis eigener Tasse am Kiosk Fragen"""
 
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
@@ -44,6 +47,7 @@ class OwnCupInKioskHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
+        # Datenbankzugriff und Empfang der Liste für die Antwort
         client = MongoClient('mongodb+srv://Dev:MAHy87WAmv8NI6Kq@mensaskill.2yqml.mongodb.net/'
                              'myFirstDatabase?retryWrites=true&w=majority')
         database = client.get_database("MensaSkill")
@@ -51,9 +55,11 @@ class OwnCupInKioskHandler(AbstractRequestHandler):
         answers = db_collection.find_one({})
         speech_text_list = answers['IF_OWN_CUP_IN_KIOSK']
 
+        # Zufällige Antwortauswahl aus der Liste
         list_index = randint(0, len(speech_text_list) - 1)
         speech_text = speech_text_list[list_index]
 
+        # Output
         handler_input.response_builder.speak(speech_text)
         return handler_input.response_builder.ask(speech_text).response
 
