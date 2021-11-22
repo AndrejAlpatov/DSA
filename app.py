@@ -1,5 +1,5 @@
 from src.kiosk_handler.namen_ausgeben_handler import NamenDerDBAusgebenHandler
-from src.xml_reader.XMLReader import XMLFileReader as XMLReader
+from src.xml.XMLReader import XMLFileReader as XMLReader
 from src.ftp.FTPManager import *
 
 from flask import Flask
