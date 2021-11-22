@@ -8,7 +8,7 @@ from random import randint
 
 def data_bank_access():
     # Get date bank access and then collections from DB
-    client = MongoClient('mongodb+srv://Dev:MAHy87WAmv8NI6Kq@mensaskill.2yqml.mongodb.net/'
+    client = MongoClient('mongodb+srv://Dev:XXX@mensaskill.2yqml.mongodb.net/'
                          'myFirstDatabase?retryWrites=true&w=majority')
     database = client.get_database("MensaSkill")
     db_collection = database["kiosks_goods"]
