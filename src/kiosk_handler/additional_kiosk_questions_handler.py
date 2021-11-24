@@ -1,9 +1,9 @@
-from pymongo import MongoClient
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.utils import is_intent_name
 from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_model import Response
 from random import randint
+from src.data_bank_functions.output_of_all_collections import data_bank_access
 
 
 class IsThereQuestionsHandler(AbstractRequestHandler):
@@ -16,12 +16,11 @@ class IsThereQuestionsHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
-        # Datenbankzugriff und Empfang der Liste für die Antwort
-        client = MongoClient('mongodb+srv://Dev:XXX@mensaskill.2yqml.mongodb.net/'
-                             'myFirstDatabase?retryWrites=true&w=majority')
-        database = client.get_database("MensaSkill")
-        db_collection = database["answers"]
-        answers = db_collection.find_one({})
+        # Get DB collections
+        list_with_collections = data_bank_access(['answers'])
+        db_collection_answers = list_with_collections[0]
+
+        answers = db_collection_answers.find_one({})
         speech_text_list = answers['IS_KIOSK_KAFFEEAUTOMAT_ARRAY']
 
         # Zufällige Antwortauswahl aus der Liste
@@ -37,6 +36,7 @@ class IsThereQuestionsHandler(AbstractRequestHandler):
         return 0
 
 
+# TODO: Passwort weglassen
 class OwnCupInKioskHandler(AbstractRequestHandler):
     """Handler fuer die Erlaubnis eigener Tasse am Kiosk Fragen"""
 
@@ -47,12 +47,11 @@ class OwnCupInKioskHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
-        # Datenbankzugriff und Empfang der Liste für die Antwort
-        client = MongoClient('mongodb+srv://Dev:XXX@mensaskill.2yqml.mongodb.net/'
-                             'myFirstDatabase?retryWrites=true&w=majority')
-        database = client.get_database("MensaSkill")
-        db_collection = database["answers"]
-        answers = db_collection.find_one({})
+        # Get DB collections
+        list_with_collections = data_bank_access(['answers'])
+        db_collection_answers = list_with_collections[0]
+
+        answers = db_collection_answers.find_one({})
         speech_text_list = answers['IF_OWN_CUP_IN_KIOSK']
 
         # Zufällige Antwortauswahl aus der Liste
