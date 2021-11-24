@@ -1,7 +1,7 @@
 import datetime
 from pymongo import MongoClient
 import xml.dom.minidom
-
+import os
 
 # XMLFileReader Class bekommt einen XML Link und gibt uns die gewünschten Daten mithilfe von Funktionen zurück
 class XMLFileReader:
@@ -10,7 +10,8 @@ class XMLFileReader:
         self.doc = xml.dom.minidom.parse(xml_file)
         self.row = self.doc.getElementsByTagName("ROW")
         self.CONNECTION_STRING = \
-            "mongodb+srv://Dev:<password>@mensaskill.2yqml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+            "mongodb+srv://" + DB_USER + ":" + DB_PASS + "@mensaskill.2yqml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+        
         self.client = MongoClient(self.CONNECTION_STRING)
         self.client = MongoClient(self.CONNECTION_STRING)
         self.database = self.client.get_database("MensaSkill")
