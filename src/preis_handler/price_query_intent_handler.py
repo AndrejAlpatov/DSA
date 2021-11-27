@@ -14,6 +14,12 @@ from src.data_bank_functions.output_of_all_collections import data_bank_access
 class PriceQueryIntentHandler(AbstractRequestHandler):
     """Handler for PriceQueryIntent."""
 
+    def activate_session(self, db_collection_answers):
+        db_collection_answers.update_one({"session_active": False}, {"$set": {"session_active": True}})
+
+    def deactivate_session(self, db_collection_answers):
+        db_collection_answers.update_one({"session_active": True}, {"$set": {"session_active": False}})
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name("PriceQueryIntent")(handler_input)
@@ -39,19 +45,28 @@ class PriceQueryIntentHandler(AbstractRequestHandler):
         reprompt = answers['OPERATOR_OF_MENSA_REPROMPT']
         """
 
+        # Get DB collections
+        list_with_collections = data_bank_access(['sessions_price'])
+        db_collection_answers = list_with_collections[0]
+
+        # deactivate session if existing
+        self.deactivate_session(db_collection_answers)
+
         # Get slots values
         slots = handler_input.request_envelope.request.intent.slots
         day = slots['day_price'].value
         membership = slots['membership_price'].value
         timeindication = slots['timeindication_price'].value
 
-        # No slot given -> start the price query session
+        # No slot given -> activate the price query session
         if day is None and membership is None and timeindication is None:
             speech_text = "Es gibt verschiedene Preise. Bist du Student oder Gast?"
+            self.activate_session(db_collection_answers)
 
-        # day_price between montag and freitag -> price everyday the same
+        # day_price between montag and freitag -> price everyday the same and activate the price query session
         elif day == "montag" or day == "dienstag" or day == "mittwoch" or day == "donnerstag" or day == "freitag":
             speech_text = "Die Preise für das Essen sind jeden Tag gleich. Bist du Student oder Gast?"
+            self.activate_session(db_collection_answers)
 
         # day_price samstag or sonntag -> no food at weekend
         elif day == "samstag" or day == "sonntag" or day == "wochenende":
@@ -65,15 +80,14 @@ class PriceQueryIntentHandler(AbstractRequestHandler):
         elif membership == "gast" or membership == "gäste":
             speech_text = "Für Gäste kostet das Essen insgesamt fünf Euro."
 
-        # any timeindication
+        # any timeindication -> activate the price query session
         elif timeindication is not None:
             speech_text = "Die Preise für das Essen sind jeden Tag gleich. Bist du Student oder Gast?"
+            self.activate_session(db_collection_answers)
 
         # something went wrong
         else:
-            speech_text = "Etwas ist bei der Preisabfrage schief gelaufen!"
+            speech_text = "Die Preisabfrage ist leider schiefgelaufen."
 
-        reprompt = speech_text
-
-        handler_input.response_builder.speak(speech_text).ask(reprompt)
+        handler_input.response_builder.speak(speech_text).ask(speech_text)
         return handler_input.response_builder.response
