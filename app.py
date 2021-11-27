@@ -5,6 +5,8 @@ from src.studierendenwerk_handler.operator_of_mensa_intent_handler import Operat
 from src.studierendenwerk_handler.studierendenwerk_activity_intent_handler import StudierendenWerkActivityIntentHandler
 from src.studierendenwerk_handler.studierendenwerk_info_intent_handler import StudierendenwerkInfoIntentHandler
 from src.studierendenwerk_handler.studierendenwerk_other_mensen_intent_handler import StudierendenwerkOtherMensenIntentHandler
+from src.preis_handler.price_query_intent_handler import PriceQueryIntentHandler
+from src.preis_handler.price_query_session_intent_handler import PriceQuerySessionIntentHandler
 
 
 
@@ -233,6 +235,8 @@ sb.add_request_handler(OperatorOfMensaIntentHandler())
 sb.add_request_handler(StudierendenWerkActivityIntentHandler())
 sb.add_request_handler(StudierendenwerkInfoIntentHandler())
 sb.add_request_handler(StudierendenwerkOtherMensenIntentHandler())
+sb.add_request_handler(PriceQueryIntentHandler())
+sb.add_request_handler(PriceQuerySessionIntentHandler())
 
 skill_adapter = SkillAdapter(
     skill=sb.create(), skill_id=1, app=app)
