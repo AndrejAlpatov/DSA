@@ -1,6 +1,10 @@
 from src.kiosk_handler.namen_ausgeben_handler import NamenDerDBAusgebenHandler
 from src.kiosk_handler.additional_kiosk_questions_handler import IsThereQuestionsHandler, OwnCupInKioskHandler
 from src.kiosk_handler.kiosk_menu_intent_handler import KioskMenuWhatIntentHandler, KioskMenuIfIntentHandler
+from src.studierendenwerk_handler.operator_of_mensa_intent_handler import OperatorOfMensaIntentHandler
+from src.studierendenwerk_handler.studierendenwerk_activity_intent_handler import StudierendenWerkActivityIntentHandler
+from src.studierendenwerk_handler.studierendenwerk_info_intent_handler import StudierendenwerkInfoIntentHandler
+from src.studierendenwerk_handler.studierendenwerk_other_mensen_intent_handler import StudierendenwerkOtherMensenIntentHandler
 
 
 
@@ -225,6 +229,10 @@ sb.add_request_handler(IsThereQuestionsHandler())
 sb.add_request_handler(OwnCupInKioskHandler())
 sb.add_request_handler(KioskMenuWhatIntentHandler())
 sb.add_request_handler(KioskMenuIfIntentHandler())
+sb.add_request_handler(OperatorOfMensaIntentHandler())
+sb.add_request_handler(StudierendenWerkActivityIntentHandler())
+sb.add_request_handler(StudierendenwerkInfoIntentHandler())
+sb.add_request_handler(StudierendenwerkOtherMensenIntentHandler())
 
 skill_adapter = SkillAdapter(
     skill=sb.create(), skill_id=1, app=app)
