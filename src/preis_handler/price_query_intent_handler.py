@@ -38,8 +38,42 @@ class PriceQueryIntentHandler(AbstractRequestHandler):
         # Select reprompt
         reprompt = answers['OPERATOR_OF_MENSA_REPROMPT']
         """
-        speech_text = "Geht!"
-        reprompt = ""
-        
+
+        # Get slots values
+        slots = handler_input.request_envelope.request.intent.slots
+        day = slots['day_price'].value
+        membership = slots['membership_price'].value
+        timeindication = slots['timeindication_price'].value
+
+        # No slot given -> start the price query session
+        if day is None and membership is None and timeindication is None:
+            speech_text = "Es gibt verschiedene Preise. Bist du Student oder Gast?"
+
+        # day_price between montag and freitag -> price everyday the same
+        elif day == "montag" or day == "dienstag" or day == "mittwoch" or day == "donnerstag" or day == "freitag":
+            speech_text = "Die Preise für das Essen sind jeden Tag gleich. Bist du Student oder Gast?"
+
+        # day_price samstag or sonntag -> no food at weekend
+        elif day == "samstag" or day == "sonntag" or day == "wochenende":
+            speech_text = "Am Wochenende wird kein Essen ausgegeben."
+
+        # membership_price student or studenten or studentin or studentinnen -> 3 euro
+        elif membership == "student" or membership == "studenten" or membership == "studentin" or membership == "studentinnen":
+            speech_text = "Für Studenten und Studentinnen kostet das Essen insgesamt drei Euro."
+
+        # membership_price gast or gäste -> 5 euro
+        elif membership == "gast" or membership == "gäste":
+            speech_text = "Für Gäste kostet das Essen insgesamt fünf Euro."
+
+        # any timeindication
+        elif timeindication is not None:
+            speech_text = "Die Preise für das Essen sind jeden Tag gleich. Bist du Student oder Gast?"
+
+        # something went wrong
+        else:
+            speech_text = "Etwas ist bei der Preisabfrage schief gelaufen!"
+
+        reprompt = speech_text
+
         handler_input.response_builder.speak(speech_text).ask(reprompt)
         return handler_input.response_builder.response
