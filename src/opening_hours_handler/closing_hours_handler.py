@@ -6,19 +6,20 @@ from random import randint
 from src.data_bank_functions.output_of_all_collections import data_bank_access
 
 
-class OpeningHoursIntentHandler(AbstractRequestHandler):
-    """Handler for Question "ab wie viel uhr kann ich in der {mensa_department} essen"""
+class ClosingHoursIntentHandler(AbstractRequestHandler):
+    """Handler for Question "bis wie viel uhr kann ich in der {mensa_department} essen" """
 
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return is_intent_name("OpeningHoursIntent")(handler_input)
+        return is_intent_name("ClosingHoursIntent")(handler_input)
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
-        # TODO: Stub for other intents
-        # from datetime import datetime
-        # current_week_day = datetime.date(datetime.now()).weekday()
+        # Get current week day. Values from 0 (Monday) to 6 (Sunday)
+        from datetime import datetime
+        current_week_day = datetime.date(datetime.now()).weekday()
+
         # Get DB collections
         list_with_collections = data_bank_access(['answers', 'slot_values'])
         db_collection_answers = list_with_collections[0]
@@ -29,8 +30,10 @@ class OpeningHoursIntentHandler(AbstractRequestHandler):
         slot_values = db_collection_slot_values.find_one({})
 
         # Get lists with answers for opening hours
-        speech_text_kiosk_open_hours_answers = answers['KIOSK_OPEN_HOURS']
-        speech_text_mensa_open_hours_answers = answers['MENSA_OPEN_HOURS']
+        speech_text_kiosk_close_hours_answers = answers['KIOSK_CLOSE_HOURS']
+        speech_text_kiosk_close_friday_hours__answers = answers['KIOSK_CLOSE_HOURS_FR']
+        speech_text_kiosk_close_weekend_hours_answers = answers['KIOSK_OPEN_TIMES']
+        speech_text_mensa_close_hours_answers = answers['MENSA_CLOSE_HOURS']
 
         # Get lists with answers if mensa department is not in the list
         speech_text_mensa_department_negative = answers['MENSA_DEPARTMENT_NEGATIVE']
@@ -45,17 +48,34 @@ class OpeningHoursIntentHandler(AbstractRequestHandler):
 
         # If slot value is kiosk
         if mensa_department in slot_values_for_kiosk:
-            # Zufällige Antwortauswahl aus der Liste
-            list_index = randint(0, len(speech_text_kiosk_open_hours_answers) - 1)
 
-            speech_text = speech_text_kiosk_open_hours_answers[list_index]
+            # for Friday
+            if current_week_day == 4:
+                # Zufällige Antwortauswahl aus der Liste
+                list_index = randint(0, len(speech_text_kiosk_close_friday_hours__answers) - 1)
+
+                speech_text = speech_text_kiosk_close_friday_hours__answers[list_index]
+
+            # from Monday to Thursday
+            elif current_week_day in range(0, 4):
+                # Zufällige Antwortauswahl aus der Liste
+                list_index = randint(0, len(speech_text_kiosk_close_hours_answers) - 1)
+
+                speech_text = speech_text_kiosk_close_hours_answers[list_index]
+
+            # for weekend
+            else:
+                # Zufällige Antwortauswahl aus der Liste
+                list_index = randint(0, len(speech_text_kiosk_close_weekend_hours_answers) - 1)
+
+                speech_text = speech_text_kiosk_close_weekend_hours_answers[list_index]
 
         # If slot value is mensa
         elif mensa_department in slot_values_for_mensa:
             # Zufällige Antwortauswahl aus der Liste
-            list_index = randint(0, len(speech_text_mensa_open_hours_answers) - 1)
+            list_index = randint(0, len(speech_text_mensa_close_hours_answers) - 1)
 
-            speech_text = speech_text_mensa_open_hours_answers[list_index]
+            speech_text = speech_text_mensa_close_hours_answers[list_index]
 
         # If slot value not presented in mensa_department
         else:

@@ -3,6 +3,7 @@ from src.kiosk_handler.additional_kiosk_questions_handler import IsThereQuestion
 from src.kiosk_handler.kiosk_menu_intent_handler import KioskMenuWhatIntentHandler, KioskMenuIfIntentHandler
 from src.opening_hours_handler.opening_hours_handler import OpeningHoursIntentHandler
 from src.opening_hours_handler.opening_time_handler import OpeningTimesIntentHandler
+from src.opening_hours_handler.closing_hours_handler import ClosingHoursIntentHandler
 
 
 
@@ -229,6 +230,7 @@ sb.add_request_handler(KioskMenuWhatIntentHandler())
 sb.add_request_handler(KioskMenuIfIntentHandler())
 sb.add_request_handler(OpeningHoursIntentHandler())
 sb.add_request_handler(OpeningTimesIntentHandler())
+sb.add_request_handler(ClosingHoursIntentHandler())
 
 skill_adapter = SkillAdapter(
     skill=sb.create(), skill_id=1, app=app)

@@ -27,6 +27,7 @@ class OpeningTimesIntentHandler(AbstractRequestHandler):
         # Get lists with answers for opening times
         speech_text_kiosk_open_times_answers = answers['KIOSK_OPEN_TIMES']
         speech_text_mensa_open_times_answers = answers['MENSA_OPEN_TIMES']
+
         # Get lists with answers if mensa department is not in the list
         speech_text_mensa_department_negative = answers['MENSA_DEPARTMENT_NEGATIVE']
 
