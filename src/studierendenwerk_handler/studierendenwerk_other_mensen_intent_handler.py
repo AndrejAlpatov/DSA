@@ -9,6 +9,7 @@ from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_model.ui import SimpleCard
 from ask_sdk_model import Response
 from random import randint
+from src.data_bank_functions.output_of_all_collections import data_bank_access
 
 class StudierendenwerkOtherMensenIntentHandler(AbstractRequestHandler):
     """Handler for StudierendenwerkOtherMensenIntent."""
@@ -20,25 +21,22 @@ class StudierendenwerkOtherMensenIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
-        # Liste möglicher Antworten
-        speech_text_list = ["Das Studierendenwerk ist nicht nur in Worms tätig. Es betreut auch "
-                            "Mensen in Landau, Ludwigshafen, Germersheim, in den Weinbergen um "
-                            "Neustadt an der Weinstraße und eine mobile Mensa, welche Currywurst "
-                            "verkauft.",
-                            "Das Studierendenwerk Vorderpfalz betreut mehrere Mensen und Cafeterien "
-                            "bei den Standorten Landau, Ludwigshafen, Worms, Germersheim, in den Weinbergen "
-                            "um Neustadt an der Weinstraße und eine mobile Mensa, welche an verschiedenen "
-                            "Orten sein kann.",
-                            "Das Studierendenwerk Vorderpfalz betreut insgesamt sieben Mensen und "
-                            "Cafeterien. Zwei in Landau, zwei in Ludwigshafen, eine in Worms, "
-                            "eine in Germersheim und eine in den Weinbergen um Neustadt an der Weinstraße."]
+        # Get DB collections
+        list_with_collections = data_bank_access(['answers_stud_werk'])
+        db_collection_answers = list_with_collections[0]
 
+        # Get documents from collections
+        answers = db_collection_answers.find_one({})
+
+        # List of all answers
+        speech_text_list = answers['OTHER_MENSEN']
+
+        # Select random answer
         list_index = randint(0, len(speech_text_list) - 1)
-
-        # zufällige Antwort ausgeben
         speech_text = speech_text_list[list_index]
-        reprompt = "Wenn du wissen willst, was das Studierendenwerk noch macht, sage \"Mit was " \
-                   "beschäftigt sich das Studierendenwerk Vorderpfalz noch?\""
+
+        # Select reprompt
+        reprompt = answers['OTHER_MENSEN_REPROMPT']
 
         handler_input.response_builder.speak(speech_text).ask(reprompt)
         return handler_input.response_builder.response
