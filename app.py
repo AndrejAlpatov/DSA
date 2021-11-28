@@ -4,6 +4,11 @@ from src.kiosk_handler.kiosk_menu_intent_handler import KioskMenuWhatIntentHandl
 from src.opening_hours_handler.opening_hours_handler import OpeningHoursIntentHandler
 from src.opening_hours_handler.opening_time_handler import OpeningTimesIntentHandler
 from src.opening_hours_handler.closing_hours_handler import ClosingHoursIntentHandler
+from src.studierendenwerk_handler.operator_of_mensa_intent_handler import OperatorOfMensaIntentHandler
+from src.studierendenwerk_handler.studierendenwerk_activity_intent_handler import StudierendenWerkActivityIntentHandler
+from src.studierendenwerk_handler.studierendenwerk_info_intent_handler import StudierendenwerkInfoIntentHandler
+from src.studierendenwerk_handler.studierendenwerk_other_mensen_intent_handler import StudierendenwerkOtherMensenIntentHandler
+
 
 
 
@@ -231,6 +236,11 @@ sb.add_request_handler(KioskMenuIfIntentHandler())
 sb.add_request_handler(OpeningHoursIntentHandler())
 sb.add_request_handler(OpeningTimesIntentHandler())
 sb.add_request_handler(ClosingHoursIntentHandler())
+sb.add_request_handler(OperatorOfMensaIntentHandler())
+sb.add_request_handler(StudierendenWerkActivityIntentHandler())
+sb.add_request_handler(StudierendenwerkInfoIntentHandler())
+sb.add_request_handler(StudierendenwerkOtherMensenIntentHandler())
+
 
 skill_adapter = SkillAdapter(
     skill=sb.create(), skill_id=1, app=app)
