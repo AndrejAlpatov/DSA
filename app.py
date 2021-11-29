@@ -1,6 +1,33 @@
 from src.kiosk_handler.namen_ausgeben_handler import NamenDerDBAusgebenHandler
+<<<<<<< HEAD
 from src.xml.XMLReader import XMLFileReader as XMLReader
 from src.ftp.FTPManager import *
+=======
+from src.kiosk_handler.additional_kiosk_questions_handler import IsThereQuestionsHandler, OwnCupInKioskHandler
+from src.kiosk_handler.kiosk_menu_intent_handler import KioskMenuWhatIntentHandler, KioskMenuIfIntentHandler
+from src.opening_hours_handler.opening_hours_handler import OpeningHoursIntentHandler
+from src.opening_hours_handler.opening_time_handler import OpeningTimesIntentHandler
+from src.opening_hours_handler.closing_hours_handler import ClosingHoursIntentHandler
+from src.studierendenwerk_handler.operator_of_mensa_intent_handler import OperatorOfMensaIntentHandler
+from src.studierendenwerk_handler.studierendenwerk_activity_intent_handler import StudierendenWerkActivityIntentHandler
+from src.studierendenwerk_handler.studierendenwerk_info_intent_handler import StudierendenwerkInfoIntentHandler
+from src.studierendenwerk_handler.studierendenwerk_other_mensen_intent_handler import StudierendenwerkOtherMensenIntentHandler
+from src.preis_handler.price_query_intent_handler import PriceQueryIntentHandler
+from src.preis_handler.price_query_session_intent_handler import PriceQuerySessionIntentHandler
+from flask import Flask
+from pymongo import MongoClient
+from ask_sdk_core.skill_builder import SkillBuilder
+from flask_ask_sdk.skill_adapter import SkillAdapter
+from ask_sdk_core.dispatch_components import AbstractRequestHandler
+from ask_sdk_core.dispatch_components import AbstractExceptionHandler
+from ask_sdk_core.utils import is_request_type, is_intent_name
+from ask_sdk_core.handler_input import HandlerInput
+from ask_sdk_model.ui import SimpleCard
+from ask_sdk_model import Response
+
+
+
+>>>>>>> master
 
 from flask import Flask
 from pymongo import MongoClient
@@ -232,6 +259,20 @@ sb.add_request_handler(RechenIntentHandler())
 sb.add_request_handler(NamenAufDBSchreibenHandler())
 sb.add_request_handler(ReadNameFromDBHandler())
 sb.add_request_handler(NamenDerDBAusgebenHandler())
+sb.add_request_handler(IsThereQuestionsHandler())
+sb.add_request_handler(OwnCupInKioskHandler())
+sb.add_request_handler(KioskMenuWhatIntentHandler())
+sb.add_request_handler(KioskMenuIfIntentHandler())
+sb.add_request_handler(OpeningHoursIntentHandler())
+sb.add_request_handler(OpeningTimesIntentHandler())
+sb.add_request_handler(ClosingHoursIntentHandler())
+sb.add_request_handler(OperatorOfMensaIntentHandler())
+sb.add_request_handler(StudierendenWerkActivityIntentHandler())
+sb.add_request_handler(StudierendenwerkInfoIntentHandler())
+sb.add_request_handler(StudierendenwerkOtherMensenIntentHandler())
+sb.add_request_handler(PriceQueryIntentHandler())
+sb.add_request_handler(PriceQuerySessionIntentHandler())
+
 
 skill_adapter = SkillAdapter(
     skill=sb.create(), skill_id=1, app=app)
