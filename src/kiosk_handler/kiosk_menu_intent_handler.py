@@ -1,21 +1,9 @@
-from pymongo import MongoClient
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.utils import is_intent_name
 from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_model import Response
 from random import randint
-
-
-def data_bank_access():
-    # Get date bank access and then collections from DB
-    client = MongoClient('mongodb+srv://Dev:XXX@mensaskill.2yqml.mongodb.net/'
-                         'myFirstDatabase?retryWrites=true&w=majority')
-    database = client.get_database("MensaSkill")
-    db_collection = database["kiosks_goods"]
-    db_collection_answers = database["answers"]
-    db_collection_prompts = database['prompts']
-
-    return db_collection, db_collection_answers, db_collection_prompts
+from src.data_bank_functions.output_of_all_collections import data_bank_access
 
 
 class KioskMenuIfIntentHandler(AbstractRequestHandler):
@@ -30,7 +18,10 @@ class KioskMenuIfIntentHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
 
         # Get DB collections
-        db_collection, db_collection_answers, db_collection_prompts = data_bank_access()
+        list_with_collections = data_bank_access(['kiosks_goods', 'answers', 'prompts'])
+        db_collection = list_with_collections[0]
+        db_collection_answers = list_with_collections[1]
+        db_collection_prompts = list_with_collections[2]
 
         # Get documents from collections
         goods = db_collection.find_one({})
@@ -96,7 +87,9 @@ class KioskMenuWhatIntentHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
 
         # Get DB collections
-        db_collection, db_collection_answers, db_collection_prompts = data_bank_access()
+        list_with_collections = data_bank_access(['kiosks_goods', 'answers'])
+        db_collection = list_with_collections[0]
+        db_collection_answers = list_with_collections[1]
 
         # Get documents from collections
         goods = db_collection.find_one({})
