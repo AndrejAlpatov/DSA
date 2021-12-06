@@ -20,3 +20,22 @@ def week_number_for_date(date_as_str):
     week_number = date_obj.isocalendar()[1]
 
     return week_number
+
+
+# correct type AMAZON.DATE to DD.MM.YYYY format
+def correction_of_date_string(date_as_str):
+    # get day from input parameter
+    day_str = date_as_str[-2:]
+
+    # If there is not year in input parameter, year and month will be set to current values
+    if date_as_str.startswith('X'):
+        month_str = datetime.date(datetime.now()).month
+        year_str = datetime.date(datetime.now()).year
+    else:  # # get year and month from input parameter
+        month_str = date_as_str[5:7]
+        year_str = date_as_str[:4]
+
+    # put all extracted values in one string
+    date_string_in_new_format = str(day_str) + '.' + str(month_str) + '.' + str(year_str)
+
+    return date_string_in_new_format
