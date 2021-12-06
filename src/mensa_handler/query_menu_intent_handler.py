@@ -117,8 +117,26 @@ class QueryMenuIntentHandler(AbstractRequestHandler):
         elif slot_value_time_indication is not None:
             # If slot value a time indication (ex. gestern, morgen)
 
-            # time_func.
-            return 0
+            # date of the week day that was indicated with a slot value
+            date_for_output = time_func.get_date_for_time_indication_values(slot_value_time_indication)
+            # week day for an output data
+            week_day = time_func.week_day_for_date(date_for_output)
+            week_day_as_str = time_func.convert_week_day_from_number_to_wort(week_day)
+
+            # get menus as string from DB for particular date
+            list_with_menus = get_menus_from_db(date_for_output)
+            string_for_output_ausgabe_1 = create_string.create_strings_from_list_values(list_with_menus)[0]
+            string_for_output_ausgabe_2 = create_string.create_strings_from_list_values(list_with_menus)[1]
+
+            if slot_value_ausgabe is None or slot_value_ausgabe == 'ausgabe 1':
+                # if slot_value_ausgabe is not defined or equal 'ausgabe 1'
+                speech_text = "Am " + week_day_as_str + " den " + date_for_output + " gibt es " + \
+                              string_for_output_ausgabe_1 + ' und dazu eine Tagessuppe und ein Dessert nach Wahl '
+
+            elif slot_value_ausgabe == 'ausgabe 2':
+                # if slot_value_ausgabe is 'ausgabe 2'
+                speech_text = "Am " + week_day_as_str + " den " + date_for_output + " gibt es " + \
+                              string_for_output_ausgabe_2 + ' und dazu eine Tagessuppe und ein Dessert nach Wahl '
 
 
 
