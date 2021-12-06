@@ -6,6 +6,13 @@ def current_week_day():
     return datetime.date(datetime.now()).weekday()
 
 
+# Get week day for particular date. Values from 0 (Monday) to 6 (Sunday)
+def week_day_for_date(date_as_str):
+    # get date object from string in format DD.MM.YYYY
+    date_obj = datetime.strptime(date_as_str, '%d.%m.%Y')
+    return date_obj.weekday()
+
+
 # Get current calendar week number
 def current_week_number():
     return datetime.date(datetime.now()).isocalendar()[1]
@@ -39,3 +46,4 @@ def correction_of_date_string(date_as_str):
     date_string_in_new_format = str(day_str) + '.' + str(month_str) + '.' + str(year_str)
 
     return date_string_in_new_format
+
