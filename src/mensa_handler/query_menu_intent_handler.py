@@ -79,29 +79,39 @@ class QueryMenuIntentHandler(AbstractRequestHandler):
             week_day_as_number = time_func.week_day_for_date(date_as_string)
             week_day_as_wort = time_func.convert_week_day_from_number_to_wort(week_day_as_number)
 
-            print(slot_value_ausgabe)
+            print(slot_value_ausgabe)  # TODO: delete string
             if slot_value_ausgabe is None or slot_value_ausgabe == 'ausgabe 1':
                 # if slot_value_ausgabe is not defined or equal 'ausgabe 1'
                 speech_text = "Am " + week_day_as_wort + " den " + date_as_string + " gibt es " + \
                               string_for_output_ausgabe_1 + ' und dazu eine Tagessuppe und ein Dessert nach Wahl '
-                print("TEST")
+                print("TEST")  # TODO: delete string
 
             elif slot_value_ausgabe == 'ausgabe 2':
                 # if slot_value_ausgabe is 'ausgabe 2'
                 speech_text = "Am " + week_day_as_wort + " den " + date_as_string + " gibt es " + \
                               string_for_output_ausgabe_2 + ' und dazu eine Tagessuppe und ein Dessert nach Wahl '
-                print("TEST_2")
+                print("TEST_2")  # TODO: delete string
 
         elif slot_value_week_day is not None:
-            current_week_number = time_func.current_week_number()
+            # If slot value a week day (Montag..Sonntag)
 
+            # date of the week day received as an input parameter
+            date_of_slot_value = time_func.get_date_for_week_day_of_current_week(slot_value_week_day)
 
             # get menus as string from DB for particular date
-            list_with_menus = get_menus_from_db(date_as_string)
+            list_with_menus = get_menus_from_db(date_of_slot_value)
             string_for_output_ausgabe_1 = create_string.create_strings_from_list_values(list_with_menus)[0]
             string_for_output_ausgabe_2 = create_string.create_strings_from_list_values(list_with_menus)[1]
 
+            if slot_value_ausgabe is None or slot_value_ausgabe == 'ausgabe 1':
+                # if slot_value_ausgabe is not defined or equal 'ausgabe 1'
+                speech_text = "Am " + slot_value_week_day + " den " + date_of_slot_value + " gibt es " + \
+                              string_for_output_ausgabe_1 + ' und dazu eine Tagessuppe und ein Dessert nach Wahl '
 
+            elif slot_value_ausgabe == 'ausgabe 2':
+                # if slot_value_ausgabe is 'ausgabe 2'
+                speech_text = "Am " + slot_value_week_day + " den " + date_of_slot_value + " gibt es " + \
+                              string_for_output_ausgabe_2 + ' und dazu eine Tagessuppe und ein Dessert nach Wahl '
 
 
         #
