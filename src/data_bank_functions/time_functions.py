@@ -57,14 +57,28 @@ def convert_week_day_from_number_to_wort(day_as_number):
 
 # get dates (as a list) for all days of the current week
 def get_dates_for_current_week():
-    week_dates=[]
-    # list_with_days_names = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag']
 
+    week_dates=[]  # list for return value
+
+    # get current day
     current_date = datetime.date(datetime.now())
+    # get date for Monday
     date_monday = (current_date - timedelta(days=(current_date.weekday()) % 7))
 
+    # append dates for all days a week to list
     for i in range(0, 6):
         week_dates.append((date_monday + timedelta(days=i)).strftime('%d.%m.%Y'))
 
     return week_dates
 
+
+# get date for week day of current week. ex for Friday
+def get_date_for_week_day_of_current_week(week_day):
+
+    # get dates (as a list) for all days of the current week
+    week_dates = get_dates_for_current_week()
+    list_with_days_names = ['montag', 'dienstag', 'mittwoch', 'donnerstag', 'freitag', 'samstag', 'sonntag']
+    # index of day(input parameter) from 0 (Monday) to 6 (Sunday)
+    index_of_week_day = list_with_days_names.index(week_day)
+
+    return week_dates[index_of_week_day]
