@@ -112,6 +112,15 @@ class QueryMenuIntentHandler(AbstractRequestHandler):
                 # if slot_value_ausgabe is 'ausgabe 2'
                 speech_text = "Am " + slot_value_week_day + " den " + date_of_slot_value + " gibt es " + \
                               string_for_output_ausgabe_2 + ' und dazu eine Tagessuppe und ein Dessert nach Wahl '
+            # TODO: implementation for weekend
+
+        elif slot_value_time_indication is not None:
+            # If slot value a time indication (ex. gestern, morgen)
+
+            # time_func.
+            return 0
+
+
 
 
         #

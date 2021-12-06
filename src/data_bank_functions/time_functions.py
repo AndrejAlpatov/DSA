@@ -6,10 +6,21 @@ def current_week_day():
     return datetime.date(datetime.now()).weekday()
 
 
+# convert a string in format DD.MM.YYYY to a datetime obj
+def convert_string_to_datetime_object(date_as_string):
+    return datetime.strptime(date_as_string, '%d.%m.%Y')
+
+
+# convert datetime object to a string in format DD.MM:YYYY
+def convert_datetime_object_to_string(date_as_object):
+    return date_as_object.strftime('%d.%m.%Y')
+
+
 # Get week day for particular date. Values from 0 (Monday) to 6 (Sunday)
 def week_day_for_date(date_as_str):
     # get date object from string in format DD.MM.YYYY
-    date_obj = datetime.strptime(date_as_str, '%d.%m.%Y')
+    date_obj = convert_string_to_datetime_object(date_as_str)
+
     return date_obj.weekday()
 
 
@@ -22,7 +33,7 @@ def current_week_number():
 def week_number_for_date(date_as_str):
 
     # get date object from string in format DD.MM.YYYY
-    date_obj = datetime.strptime(date_as_str, '%d.%m.%Y')
+    date_obj = convert_string_to_datetime_object(date_as_str)
     # get week number from date object
     week_number = date_obj.isocalendar()[1]
 
@@ -58,16 +69,17 @@ def convert_week_day_from_number_to_wort(day_as_number):
 # get dates (as a list) for all days of the current week
 def get_dates_for_current_week():
 
-    week_dates=[]  # list for return value
+    week_dates = []  # list for return value
 
     # get current day
     current_date = datetime.date(datetime.now())
     # get date for Monday
     date_monday = (current_date - timedelta(days=(current_date.weekday()) % 7))
 
+    # (date_monday + timedelta(days=i))
     # append dates for all days a week to list
     for i in range(0, 6):
-        week_dates.append((date_monday + timedelta(days=i)).strftime('%d.%m.%Y'))
+        week_dates.append(convert_datetime_object_to_string(date_monday + timedelta(days=i)))
 
     return week_dates
 
@@ -82,3 +94,28 @@ def get_date_for_week_day_of_current_week(week_day):
     index_of_week_day = list_with_days_names.index(week_day)
 
     return week_dates[index_of_week_day]
+
+
+# get date for a day, which specified by value of slot type time_indication
+def get_date_for_time_indication_values(time_indication):
+
+    # get current day
+    current_date = datetime.date(datetime.now())
+    delta = 0  # difference in days to current day
+
+    if time_indication == 'jetzt' or time_indication == 'heute':
+        delta = 0
+    elif time_indication == 'morgen':
+        delta = 1
+    elif time_indication == 'übermorgen':
+        delta = 2
+    elif time_indication == 'gestern':
+        delta = -1
+    elif time_indication == 'vorgestern':
+        delta = -2
+
+    date_of_date_denoted_with_time_indication_as_obj = current_date + timedelta(days=delta)
+    date_of_date_denoted_with_time_indication_as_str = \
+        convert_datetime_object_to_string(date_of_date_denoted_with_time_indication_as_obj)
+
+    return date_of_date_denoted_with_time_indication_as_str
