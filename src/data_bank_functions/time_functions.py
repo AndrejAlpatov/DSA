@@ -47,3 +47,8 @@ def correction_of_date_string(date_as_str):
 
     return date_string_in_new_format
 
+# change week day as number(0..6) in natural language (Montag..Sonntag)
+def convert_week_day_from_number_to_wort(day_as_number):
+
+    list_with_days_names = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag']
+    return list_with_days_names[day_as_number]
