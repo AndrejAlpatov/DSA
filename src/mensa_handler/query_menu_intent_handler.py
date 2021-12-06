@@ -5,7 +5,7 @@ from ask_sdk_model import Response
 from random import randint
 from src.data_bank_functions.output_of_all_collections import data_bank_access
 import src.data_bank_functions.time_functions as time_func
-import src.data_bank_functions.get_menu_from_db as menu_from_db
+from src.data_bank_functions.get_menu_from_db import get_menus_from_db
 import src.data_bank_functions.create_string_from_list_values as create_string
 
 
@@ -64,23 +64,33 @@ class QueryMenuIntentHandler(AbstractRequestHandler):
         # # Get lists with mensa departments
         # slot_values_for_kiosk = slot_values['MENSA_DEPARTMENT_KIOSK']
         # slot_values_for_mensa = slot_values['MENSA_DEPARTMENT_MENSA']
-
-        if slot_value_date_for_menu_query is not None and (slot_value_ausgabe is None or 'ausgabe 1'):
-            # if slot value is in "AMAZON.DATE format and slot_value_ausgabe is not defined or equal 'ausgabe 1'
+        if slot_value_date_for_menu_query is not None:
+            # if slot value is in "AMAZON.DATE format
 
             # convert to type DD:MM:YYYY
             date_as_string = time_func.correction_of_date_string(slot_value_date_for_menu_query)
 
             # get menus as string from DB for particular date
-            list_with_menus = menu_from_db(date_as_string)
-            string_for_output = create_string.create_strings_from_list_values(list_with_menus)[0]
+            list_with_menus = get_menus_from_db(date_as_string)
+            string_for_output_ausgabe_1 = create_string.create_strings_from_list_values(list_with_menus)[0]
+            string_for_output_ausgabe_2 = create_string.create_strings_from_list_values(list_with_menus)[1]
 
             # get week day as wort for speech text
-            week_day_as_number = time_func.week_number_for_date(date_as_string)
+            week_day_as_number = time_func.week_day_for_date(date_as_string)
             week_day_as_wort = time_func.convert_week_day_from_number_to_wort(week_day_as_number)
 
-            speech_text = "Am " + week_day_as_wort + " den " + date_as_string + " gibt es " + string_for_output + \
-                          ' und dazu eine Tagessuppe und ein Dessert nach Wahl '
+            print(slot_value_ausgabe)
+            if slot_value_ausgabe is None or slot_value_ausgabe == 'ausgabe 1':
+                # if slot_value_ausgabe is not defined or equal 'ausgabe 1'
+                speech_text = "Am " + week_day_as_wort + " den " + date_as_string + " gibt es " + \
+                              string_for_output_ausgabe_1 + ' und dazu eine Tagessuppe und ein Dessert nach Wahl '
+                print("TEST")
+
+            elif slot_value_ausgabe == 'ausgabe 2':
+                # if slot_value_ausgabe is 'ausgabe 2'
+                speech_text = "Am " + week_day_as_wort + " den " + date_as_string + " gibt es " + \
+                              string_for_output_ausgabe_2 + ' und dazu eine Tagessuppe und ein Dessert nach Wahl '
+                print("TEST_2")
 
 
 
