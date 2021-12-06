@@ -92,7 +92,14 @@ class QueryMenuIntentHandler(AbstractRequestHandler):
                               string_for_output_ausgabe_2 + ' und dazu eine Tagessuppe und ein Dessert nach Wahl '
                 print("TEST_2")
 
+        elif slot_value_week_day is not None:
+            current_week_number = time_func.current_week_number()
 
+
+            # get menus as string from DB for particular date
+            list_with_menus = get_menus_from_db(date_as_string)
+            string_for_output_ausgabe_1 = create_string.create_strings_from_list_values(list_with_menus)[0]
+            string_for_output_ausgabe_2 = create_string.create_strings_from_list_values(list_with_menus)[1]
 
 
 
