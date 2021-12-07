@@ -1,7 +1,7 @@
 import datetime
 from pymongo import MongoClient
 import xml.dom.minidom
-import os
+
 
 # XMLFileReader Class bekommt einen XML Link und gibt uns die gewünschten Daten mithilfe von Funktionen zurück
 class XMLFileReader:
