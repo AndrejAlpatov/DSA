@@ -5,7 +5,7 @@ import os
 
 # XMLFileReader Class bekommt einen XML Link und gibt uns die gewünschten Daten mithilfe von Funktionen zurück
 class XMLFileReader:
-    def __init__(self, xml_file):
+    def __init__(self,xml_file):
         self.day = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
         self.doc = xml.dom.minidom.parse(xml_file)
         self.row = self.doc.getElementsByTagName("ROW")

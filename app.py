@@ -1,8 +1,6 @@
 from src.kiosk_handler.namen_ausgeben_handler import NamenDerDBAusgebenHandler
-from src.xml_reader.XMLReader import XMLFileReader as XMLReader
-from src.ftp.FTPManager import *
-from src.kiosk_handler.additional_kiosk_questions_handler import IsThereQuestionsHandler, OwnCupInKioskHandler
-from src.kiosk_handler.kiosk_menu_intent_handler import KioskMenuWhatIntentHandler, KioskMenuIfIntentHandler
+from src.xml_handler.XMLManager import XMLFileReader as XMLReader
+from src.ftp.FTPManager import check_for_new_data
 from src.kiosk_handler.additional_kiosk_questions_handler import IsThereQuestionsHandler, OwnCupInKioskHandler
 from src.kiosk_handler.kiosk_menu_intent_handler import KioskMenuWhatIntentHandler, KioskMenuIfIntentHandler
 from src.opening_hours_handler.opening_hours_handler import OpeningHoursIntentHandler
@@ -46,7 +44,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
                       "Wir bieten ihnen hier die Möglichkeit, Informationen zur Mensa und dem Kioskangebot zu erfragen." \
                       "Frage Sie mich zum Beispiel was es Heute zum essen gibt."
 
-        #update_database() TODO: function in line 209
+        #check_for_new_data() TODO: function ftp directory (works but couldnt test)
 
         handler_input.response_builder.speak(speech_text).set_card(
             SimpleCard("Hello World", speech_text)).set_should_end_session(
