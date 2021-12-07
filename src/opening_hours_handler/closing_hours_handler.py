@@ -4,6 +4,7 @@ from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_model import Response
 from random import randint
 from src.data_bank_functions.output_of_all_collections import data_bank_access
+import src.data_bank_functions.time_functions as time_func
 
 
 class ClosingHoursIntentHandler(AbstractRequestHandler):
@@ -17,8 +18,7 @@ class ClosingHoursIntentHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
 
         # Get current week day. Values from 0 (Monday) to 6 (Sunday)
-        from datetime import datetime
-        current_week_day = datetime.date(datetime.now()).weekday()
+        current_week_day = time_func.current_week_day()
 
         # Get DB collections
         list_with_collections = data_bank_access(['answers', 'slot_values'])
@@ -53,28 +53,24 @@ class ClosingHoursIntentHandler(AbstractRequestHandler):
             if current_week_day == 4:
                 # Zufällige Antwortauswahl aus der Liste
                 list_index = randint(0, len(speech_text_kiosk_close_friday_hours__answers) - 1)
-
                 speech_text = speech_text_kiosk_close_friday_hours__answers[list_index]
 
             # from Monday to Thursday
             elif current_week_day in range(0, 4):
                 # Zufällige Antwortauswahl aus der Liste
                 list_index = randint(0, len(speech_text_kiosk_close_hours_answers) - 1)
-
                 speech_text = speech_text_kiosk_close_hours_answers[list_index]
 
             # for weekend
             else:
                 # Zufällige Antwortauswahl aus der Liste
                 list_index = randint(0, len(speech_text_kiosk_close_weekend_hours_answers) - 1)
-
                 speech_text = speech_text_kiosk_close_weekend_hours_answers[list_index]
 
         # If slot value is mensa
         elif mensa_department in slot_values_for_mensa:
             # Zufällige Antwortauswahl aus der Liste
             list_index = randint(0, len(speech_text_mensa_close_hours_answers) - 1)
-
             speech_text = speech_text_mensa_close_hours_answers[list_index]
 
         # If slot value not presented in mensa_department

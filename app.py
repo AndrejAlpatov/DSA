@@ -14,6 +14,7 @@ from src.studierendenwerk_handler.studierendenwerk_info_intent_handler import St
 from src.studierendenwerk_handler.studierendenwerk_other_mensen_intent_handler import StudierendenwerkOtherMensenIntentHandler
 from src.preis_handler.price_query_intent_handler import PriceQueryIntentHandler
 from src.preis_handler.price_query_session_intent_handler import PriceQuerySessionIntentHandler
+from src.mensa_handler.query_menu_intent_handler import QueryMenuIntentHandler
 from flask import Flask
 from pymongo import MongoClient
 from ask_sdk_core.skill_builder import SkillBuilder
@@ -256,6 +257,7 @@ sb.add_request_handler(StudierendenwerkInfoIntentHandler())
 sb.add_request_handler(StudierendenwerkOtherMensenIntentHandler())
 sb.add_request_handler(PriceQueryIntentHandler())
 sb.add_request_handler(PriceQuerySessionIntentHandler())
+sb.add_request_handler(QueryMenuIntentHandler())
 
 
 skill_adapter = SkillAdapter(
