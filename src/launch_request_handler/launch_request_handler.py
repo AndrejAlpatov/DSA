@@ -15,6 +15,8 @@ import json
 class LaunchRequestHandler(AbstractRequestHandler):
     """Handler for Skill Launch."""
 
+    apl_document_path = "res/launchAPLdocument.json"
+
     def _load_apl_document(self, file_path):
         # type: (str) -> Dict[str, Any]
         """Load the apl json document at the path into a dict object."""
@@ -28,8 +30,8 @@ class LaunchRequestHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         speech_text = "Willkommen zum Mensa-Skill des studierenden Werk der Vorderpfalz! " \
-                      "Wir bieten ihnen hier die Möglichkeit, Informationen zur Mensa und dem Kioskangebot zu erfragen." \
-                      "Frage Sie mich zum Beispiel was es Heute zum essen gibt."
+                      "Wir bieten ihnen hier die Möglichkeit, Informationen zur Mensa und dem Kioskangebot zu erfragen. " \
+                      "Fragen Sie mich zum Beispiel was es Heute zum essen gibt."
 
         #update_database() TODO: function in line 209
 
@@ -39,7 +41,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
             response_builder.add_directive(
                 RenderDocumentDirective(
                     token="launchToken",
-                    document=self._load_apl_document("res.launchAPLdocument.json")
+                    document=self._load_apl_document(self.apl_document_path)
                 )
             )
 
