@@ -22,6 +22,7 @@ class QueryMenuIntentHandler(AbstractRequestHandler):
         slot_value_ausgabe = slots['ausgabe'].value
         slot_value_week_day = slots['week_day'].value
         slot_value_time_indication = slots['time_indication'].value
+        slot_value_days_ahead = slots['number_of_days_ahead'].value
 
         if slot_value_date_for_menu_query is not None:
             # if slot value is in "AMAZON.DATE format

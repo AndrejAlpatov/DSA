@@ -114,8 +114,35 @@ def get_date_for_time_indication_values(time_indication):
     elif time_indication == 'vorgestern':
         delta = -2
 
-    date_of_date_denoted_with_time_indication_as_obj = current_date + timedelta(days=delta)
-    date_of_date_denoted_with_time_indication_as_str = \
-        convert_datetime_object_to_string(date_of_date_denoted_with_time_indication_as_obj)
+    date_of_day_denoted_with_time_indication_as_obj = current_date + timedelta(days=delta)
+    date_of_day_denoted_with_time_indication_as_str = \
+        convert_datetime_object_to_string(date_of_day_denoted_with_time_indication_as_obj)
 
-    return date_of_date_denoted_with_time_indication_as_str
+    return date_of_day_denoted_with_time_indication_as_str
+
+
+# get date for a day, which is n-days ahead, where n is a slot value from intent
+def get_date_for_days_ahead_intent(days_ahead_in):
+
+    # get current day
+    current_date = datetime.date(datetime.now())
+    days_ahead = 0  # the number of days ahead
+
+    if days_ahead_in == 'einem':
+        days_ahead = 1
+    elif days_ahead_in == '2':
+        days_ahead = 2
+    elif days_ahead_in == '3':
+        days_ahead = 3
+    elif days_ahead_in == '4':
+        days_ahead = 4
+    elif days_ahead_in == '5':
+        days_ahead = 5
+    elif days_ahead_in == 'einer Woche':
+        days_ahead = 7
+
+    date_of_day_which_n_days_ahead_as_obj = current_date + timedelta(days=days_ahead)
+    date_of_day_which_n_days_ahead_as_str = \
+        convert_datetime_object_to_string(date_of_day_which_n_days_ahead_as_obj)
+
+    return date_of_day_which_n_days_ahead_as_str
