@@ -22,6 +22,7 @@ class QueryMenuIntentHandler(AbstractRequestHandler):
         slot_value_ausgabe = slots['ausgabe'].value
         slot_value_week_day = slots['week_day'].value
         slot_value_time_indication = slots['time_indication'].value
+        slot_value_days_ahead = slots['number_of_days_ahead'].value
 
         if slot_value_date_for_menu_query is not None:
             # if slot value is in "AMAZON.DATE format
@@ -46,6 +47,15 @@ class QueryMenuIntentHandler(AbstractRequestHandler):
             date_for_output = time_func.get_date_for_time_indication_values(slot_value_time_indication)
             # text for output according date and number of menu
             speech_text = output_for_query_menu_intent(slot_value_ausgabe, date_for_output)
+
+        elif slot_value_days_ahead is not None:
+            # If slot value is a number of days ahead (ex. einem, 2, einer Woche)
+
+            # date of the day, which is n-Days ahead from today
+            date_for_output = time_func.get_date_for_days_ahead_intent(slot_value_days_ahead)
+
+            speech_text = output_for_query_menu_intent(slot_value_ausgabe, date_for_output)
+
         else:
             speech_text = 'Bei der Bearbeitung Ihrer Anfrage ist ein Fehler aufgetreten, bitte wiederholen'
 
