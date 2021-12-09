@@ -7,8 +7,6 @@ import xml.dom.minidom
 class XMLFileReader:
     def __init__(self,xml_file):
         self.day = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
-        self.doc = xml.dom.minidom.parse(xml_file)
-        self.row = self.doc.getElementsByTagName("ROW")
         self.CONNECTION_STRING = \
             "mongodb+srv://" + DB_USER + ":" + DB_PASS + "@mensaskill.2yqml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
         
@@ -29,8 +27,10 @@ class XMLFileReader:
         return str_calender_week
 
     # "Hauptfunktion"
-    def get_data(self):
-        for essen in self.row:
+    def get_data(self,xml_file):
+        doc = xml.dom.minidom.parse(xml_file)
+        row = doc.getElementsByTagName("ROW")
+        for essen in row:
             if essen.getAttribute("DPORTNAME") == "Mensa Worms":
                 component_list = []
 

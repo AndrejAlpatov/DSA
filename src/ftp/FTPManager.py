@@ -34,3 +34,4 @@ def check_for_new_data():
         ssh.close()
         # wird später mit XML Reader eingelesen und in Datenbank gespeichert
         return files_to_fetch
+    else: return [] #wenn es keine neuen Dateien gibt soll eine leere Liste zurückgeben werden

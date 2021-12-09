@@ -1,31 +1,30 @@
-from src.kiosk_handler.namen_ausgeben_handler import NamenDerDBAusgebenHandler
-from src.xml_handler.XMLManager import XMLFileReader as XMLReader
-from src.ftp.FTPManager import check_for_new_data
+from ask_sdk_core.dispatch_components import AbstractExceptionHandler
+from ask_sdk_core.dispatch_components import AbstractRequestHandler
+from ask_sdk_core.handler_input import HandlerInput
+from ask_sdk_core.skill_builder import SkillBuilder
+from ask_sdk_core.utils import is_request_type, is_intent_name
+from ask_sdk_model import Response
+from ask_sdk_model.ui import SimpleCard
+from flask import Flask
+from flask_ask_sdk.skill_adapter import SkillAdapter
+from pymongo import MongoClient
+
 from src.kiosk_handler.additional_kiosk_questions_handler import IsThereQuestionsHandler, OwnCupInKioskHandler
 from src.kiosk_handler.kiosk_menu_intent_handler import KioskMenuWhatIntentHandler, KioskMenuIfIntentHandler
+from src.kiosk_handler.namen_ausgeben_handler import NamenDerDBAusgebenHandler
+from src.mensa_handler.query_menu_intent_handler import QueryMenuIntentHandler
+from src.opening_hours_handler.closing_hours_handler import ClosingHoursIntentHandler
 from src.opening_hours_handler.opening_hours_handler import OpeningHoursIntentHandler
 from src.opening_hours_handler.opening_time_handler import OpeningTimesIntentHandler
-from src.opening_hours_handler.closing_hours_handler import ClosingHoursIntentHandler
+from src.preis_handler.price_query_intent_handler import PriceQueryIntentHandler
+from src.preis_handler.price_query_session_intent_handler import PriceQuerySessionIntentHandler
 from src.studierendenwerk_handler.operator_of_mensa_intent_handler import OperatorOfMensaIntentHandler
 from src.studierendenwerk_handler.studierendenwerk_activity_intent_handler import StudierendenWerkActivityIntentHandler
 from src.studierendenwerk_handler.studierendenwerk_info_intent_handler import StudierendenwerkInfoIntentHandler
-from src.studierendenwerk_handler.studierendenwerk_other_mensen_intent_handler import StudierendenwerkOtherMensenIntentHandler
-from src.preis_handler.price_query_intent_handler import PriceQueryIntentHandler
-from src.preis_handler.price_query_session_intent_handler import PriceQuerySessionIntentHandler
-from src.mensa_handler.query_menu_intent_handler import QueryMenuIntentHandler
-from flask import Flask
-from pymongo import MongoClient
-from ask_sdk_core.skill_builder import SkillBuilder
-from flask_ask_sdk.skill_adapter import SkillAdapter
-from ask_sdk_core.dispatch_components import AbstractRequestHandler
-from ask_sdk_core.dispatch_components import AbstractExceptionHandler
-from ask_sdk_core.utils import is_request_type, is_intent_name
-from ask_sdk_core.handler_input import HandlerInput
-from ask_sdk_model.ui import SimpleCard
-from ask_sdk_model import Response
-
-
-
+from src.studierendenwerk_handler.studierendenwerk_other_mensen_intent_handler import \
+    StudierendenwerkOtherMensenIntentHandler
+from xml_handler import XMLManager
+from ftp import  FTPManager
 
 app = Flask(__name__)
 
@@ -44,7 +43,14 @@ class LaunchRequestHandler(AbstractRequestHandler):
                       "Wir bieten ihnen hier die Möglichkeit, Informationen zur Mensa und dem Kioskangebot zu erfragen." \
                       "Frage Sie mich zum Beispiel was es Heute zum essen gibt."
 
-        #check_for_new_data() TODO: function ftp directory (works but couldnt test)
+        #TODO: needs to be tested by someone
+        #files_to_read = FTPManager.check_for_new_data()
+        #if len(files_to_read) > 0:
+        #reader = XMLManager.XMLFileReader()
+        #for file in files_to_read:
+        #   reader.get_data("res\\"+file)
+
+        #TODO: Fetch User ID and put it in the data base
 
         handler_input.response_builder.speak(speech_text).set_card(
             SimpleCard("Hello World", speech_text)).set_should_end_session(
