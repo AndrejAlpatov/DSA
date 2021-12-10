@@ -1,35 +1,35 @@
 {
     "type": "APL",
-    "version": "1.1",
-    "settings": {},
+    "version": "1.8",
+    "license": "Copyright 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.\nSPDX-License-Identifier: LicenseRef-.amazon.com.-AmznSL-1.0\nLicensed under the Amazon Software License  http://aws.amazon.com/asl/",
     "theme": "dark",
-    "import": [],
-    "resources": [],
-    "styles": {},
-    "onMount": [],
-    "graphics": {},
-    "commands": {},
-    "layouts": {},
+    "import": [
+        {
+            "name": "alexa-layouts",
+            "version": "1.4.0"
+        }
+    ],
     "mainTemplate": {
         "parameters": [
             "payload"
         ],
-        "items": [
+        "item": [
             {
-                "type": "Container",
-                "items": [
-                    {
-                        "type": "Text",
-                        "paddingTop": "12dp",
-                        "paddingBottom": "12dp",
-                        "fontSize": "72dp",
-                        "text": "Hello Cake Time!"
-                    }
-                ],
-                "height": "100%",
-                "width": "100%"
+                "type": "AlexaHeadline",
+                "primaryText": "${payload.headlineTemplateData.properties.textContent.primaryText.text}",
+                "headerAttributionPrimacy": true,
+                "backgroundColor": "green",
+                "footerHintText": "${payload.headlineTemplateData.properties.hintText}",
+                "headerAttributionText": "${payload.headlineTemplateData.properties.logoText}",
+                "id": "PlantHeadline",
+                "speech": "${payload.headlineTemplateData.properties.welcomeSpeech}"
             }
         ]
-
-    }
+    },
+    "onMount": [
+        {
+            "type": "SpeakItem",
+            "componentId": "PlantHeadline"
+        }
+    ]
 }
