@@ -1,32 +1,35 @@
 {
-    "document": {
-        "type": "APL",
-        "version": "1.8",
-        "license": "Copyright 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.\nSPDX-License-Identifier: LicenseRef-.amazon.com.-AmznSL-1.0\nLicensed under the Amazon Software License  http://aws.amazon.com/asl/",
-        "theme": "dark",
-        "import": [],
-        "settings": {},
-        "resources": [],
-        "styles": {},
-        "onMount": [],
-        "graphics": {},
-        "commands": {},
-        "layouts": {},
-        "mainTemplate": {
-            "parameters": [
-                "payload"
-            ],
-            "items": [
-                {
-                    "type": "Text",
-                    "height": "100vh",
-                    "textAlign": "center",
-                    "textAlignVertical": "center",
-                    "text": "Hello World!"
-                }
-            ]
-        }
-    },
-    "datasources": {},
-    "sources": {}
+    "type": "APL",
+    "version": "1.1",
+    "settings": {},
+    "theme": "dark",
+    "import": [],
+    "resources": [],
+    "styles": {},
+    "onMount": [],
+    "graphics": {},
+    "commands": {},
+    "layouts": {},
+    "mainTemplate": {
+        "parameters": [
+            "payload"
+        ],
+        "items": [
+            {
+                "type": "Container",
+                "items": [
+                    {
+                        "type": "Text",
+                        "paddingTop": "12dp",
+                        "paddingBottom": "12dp",
+                        "fontSize": "72dp",
+                        "text": "Hello Cake Time!"
+                    }
+                ],
+                "height": "100%",
+                "width": "100%"
+            }
+        ]
+
+    }
 }
