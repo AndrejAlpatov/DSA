@@ -1,8 +1,6 @@
 from src.kiosk_handler.namen_ausgeben_handler import NamenDerDBAusgebenHandler
-from src.xml_reader.XMLReader import XMLFileReader as XMLReader
-from src.ftp.FTPManager import *
-from src.kiosk_handler.additional_kiosk_questions_handler import IsThereQuestionsHandler, OwnCupInKioskHandler
-from src.kiosk_handler.kiosk_menu_intent_handler import KioskMenuWhatIntentHandler, KioskMenuIfIntentHandler
+#from src.xml_reader.XMLReader import XMLFileReader as XMLReader
+#from src.ftp.FTPManager import *
 from src.kiosk_handler.additional_kiosk_questions_handler import IsThereQuestionsHandler, OwnCupInKioskHandler
 from src.kiosk_handler.kiosk_menu_intent_handler import KioskMenuWhatIntentHandler, KioskMenuIfIntentHandler
 from src.opening_hours_handler.opening_hours_handler import OpeningHoursIntentHandler
