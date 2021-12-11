@@ -9,8 +9,10 @@ from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_model.ui import SimpleCard
 from ask_sdk_model import Response
 from ask_sdk_model.interfaces.alexa.presentation.apl import RenderDocumentDirective
+from src.data_bank_functions.output_of_all_collections import data_bank_access
 import res
 import json
+
 
 class LaunchRequestHandler(AbstractRequestHandler):
     """Handler for Skill Launch."""
@@ -29,9 +31,16 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        speech_text = "Willkommen zum Mensa-Skill des studierenden Werk der Vorderpfalz! " \
-                      "Wir bieten ihnen hier die Möglichkeit, Informationen zur Mensa und dem Kioskangebot zu erfragen. " \
-                      "Fragen Sie mich zum Beispiel was es Heute zum essen gibt."
+
+        # Get DB collections
+        list_with_collections = data_bank_access(['answers_launch'])
+        db_collection_answers = list_with_collections[0]
+
+        # Get documents from collections
+        answers = db_collection_answers.find_one({})
+
+        # Select answer
+        speech_text = answers['STD_ANSWER']
 
         #update_database() TODO: function in line 209
 

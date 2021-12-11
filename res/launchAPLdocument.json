@@ -16,13 +16,13 @@
         "item": [
             {
                 "type": "AlexaHeadline",
-                "primaryText": "${payload.headlineTemplateData.properties.textContent.primaryText.text}",
+                "primaryText": "Willkommen zum Mensa-Skill",
                 "headerAttributionPrimacy": true,
                 "backgroundColor": "green",
-                "footerHintText": "${payload.headlineTemplateData.properties.hintText}",
-                "headerAttributionText": "${payload.headlineTemplateData.properties.logoText}",
+                "footerHintText": "Frage, \"Was gibt es heute zum Essen?\"",
+                "headerAttributionText": "HS-Worms",
                 "id": "PlantHeadline",
-                "speech": "${payload.headlineTemplateData.properties.welcomeSpeech}"
+                "speech": "<speak><amazon:emotion name='excited' intensity='medium'>Welcome to The Daily Plant Facts</amazon:emotion></speak>"
             }
         ]
     },
