@@ -1,0 +1,35 @@
+{
+    "type": "APL",
+    "version": "1.8",
+    "license": "Copyright 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.\nSPDX-License-Identifier: LicenseRef-.amazon.com.-AmznSL-1.0\nLicensed under the Amazon Software License  http://aws.amazon.com/asl/",
+    "theme": "dark",
+    "import": [
+        {
+            "name": "alexa-layouts",
+            "version": "1.4.0"
+        }
+    ],
+    "mainTemplate": {
+        "parameters": [
+            "payload"
+        ],
+        "item": [
+            {
+                "type": "AlexaHeadline",
+                "primaryText": "Willkommen zum Mensa-Skill",
+                "headerAttributionPrimacy": true,
+                "backgroundColor": "green",
+                "footerHintText": "Frage, \"Was gibt es heute zum Essen?\"",
+                "headerAttributionText": "HS-Worms",
+                "id": "PlantHeadline",
+                "speech": "<speak><amazon:emotion name='excited' intensity='medium'>Welcome to The Daily Plant Facts</amazon:emotion></speak>"
+            }
+        ]
+    },
+    "onMount": [
+        {
+            "type": "SpeakItem",
+            "componentId": "PlantHeadline"
+        }
+    ]
+}

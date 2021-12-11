@@ -13,6 +13,7 @@ from src.studierendenwerk_handler.studierendenwerk_other_mensen_intent_handler i
 from src.preis_handler.price_query_intent_handler import PriceQueryIntentHandler
 from src.preis_handler.price_query_session_intent_handler import PriceQuerySessionIntentHandler
 from src.mensa_handler.query_menu_intent_handler import QueryMenuIntentHandler
+from src.launch_request_handler.launch_request_handler import LaunchRequestHandler
 from flask import Flask
 from pymongo import MongoClient
 from ask_sdk_core.skill_builder import SkillBuilder
@@ -30,26 +31,6 @@ from ask_sdk_model import Response
 app = Flask(__name__)
 
 sb = SkillBuilder()
-
-class LaunchRequestHandler(AbstractRequestHandler):
-    """Handler for Skill Launch."""
-
-    def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
-        return is_request_type("LaunchRequest")(handler_input)
-
-    def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
-        speech_text = "Willkommen zum Mensa-Skill des studierenden Werk der Vorderpfalz! " \
-                      "Wir bieten ihnen hier die Möglichkeit, Informationen zur Mensa und dem Kioskangebot zu erfragen." \
-                      "Frage Sie mich zum Beispiel was es Heute zum essen gibt."
-
-        #update_database() TODO: function in line 209
-
-        handler_input.response_builder.speak(speech_text).set_card(
-            SimpleCard("Hello World", speech_text)).set_should_end_session(
-            False)
-        return handler_input.response_builder.response
 
 
 class HelpIntentHandler(AbstractRequestHandler):
