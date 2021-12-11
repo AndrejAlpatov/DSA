@@ -18,7 +18,7 @@
                 "type": "AlexaHeadline",
                 "primaryText": "Willkommen zum Mensa-Skill",
                 "headerAttributionPrimacy": true,
-                "backgroundColor": "green",
+                "backgroundColor": "#099a0b",
                 "footerHintText": "Frage, \"Was gibt es heute zum Essen?\"",
                 "headerAttributionText": "HS-Worms",
                 "id": "PlantHeadline",
