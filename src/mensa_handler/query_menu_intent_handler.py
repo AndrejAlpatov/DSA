@@ -1,13 +1,23 @@
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
-from ask_sdk_core.utils import is_intent_name
+from ask_sdk_core.utils import is_intent_name, get_supported_interfaces
 from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_model import Response
 import src.data_bank_functions.time_functions as time_func
 from src.data_bank_functions.output_for_query_menu_intent import output_for_query_menu_intent
-
+from ask_sdk_model.interfaces.alexa.presentation.apl import RenderDocumentDirective
+import res
+import json
 
 class QueryMenuIntentHandler(AbstractRequestHandler):
     """Handler for Question "was gibt es heute zum essen" """
+
+    apl_document_path = "res/queryMenuAPLdocument.json"
+
+    def _load_apl_document(self, file_path):
+        # type: (str) -> Dict[str, Any]
+        """Load the apl json document at the path into a dict object."""
+        with open(file_path) as f:
+            return json.load(f)
 
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
@@ -58,6 +68,16 @@ class QueryMenuIntentHandler(AbstractRequestHandler):
 
         else:
             speech_text = 'Bei der Bearbeitung Ihrer Anfrage ist ein Fehler aufgetreten, bitte wiederholen'
+
+        # Abfrage ob das Gerät APL unterstützt
+        if get_supported_interfaces(handler_input).alexa_presentation_apl is not None:
+            response_builder = handler_input.response_builder
+            response_builder.add_directive(
+                RenderDocumentDirective(
+                    token="queryMenuToken",
+                    document=self._load_apl_document(self.apl_document_path)
+                )
+            )
 
         handler_input.response_builder.speak(speech_text)
         return handler_input.response_builder.ask(speech_text).response
