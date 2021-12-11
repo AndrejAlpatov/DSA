@@ -13,6 +13,12 @@ class QueryMenuIntentHandler(AbstractRequestHandler):
 
     apl_document_path = "res/queryMenuAPLdocument.json"
 
+    #def writeToJsonFile(self, speech_text):
+        #data = {}
+        #data["mainTemplate.item[0].primaryText"] = speech_text
+        #with open(self.apl_document_path, 'w') as f:
+            #json.dump(data, f)
+
     def _load_apl_document(self, file_path):
         # type: (str) -> Dict[str, Any]
         """Load the apl json document at the path into a dict object."""
@@ -72,6 +78,7 @@ class QueryMenuIntentHandler(AbstractRequestHandler):
         # Abfrage ob das Gerät APL unterstützt
         if get_supported_interfaces(handler_input).alexa_presentation_apl is not None:
             response_builder = handler_input.response_builder
+            #self.writeToJsonFile(speech_text)
             response_builder.add_directive(
                 RenderDocumentDirective(
                     token="queryMenuToken",
