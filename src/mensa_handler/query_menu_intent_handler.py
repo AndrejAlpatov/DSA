@@ -13,16 +13,22 @@ class QueryMenuIntentHandler(AbstractRequestHandler):
 
     apl_document_path = "res/queryMenuAPLdocument.json"
 
-    #def writeToJsonFile(self, speech_text):
-        #data = {}
-        #data["mainTemplate.item[0].primaryText"] = speech_text
-        #with open(self.apl_document_path, 'w') as f:
-            #json.dump(data, f)
+    def writeToJsonFile(self, speech_text):
+        # Load the apl json document at the path into a dict object
+        with open(self.apl_document_path) as f:
+            data = json.load(f)
 
-    def _load_apl_document(self, file_path):
+        # update the new data
+        data["mainTemplate"]["item"][0]["items"][1]["items"][1]["items"][0]["text"] = speech_text
+
+        # Load the apl document with write-rights
+        with open(self.apl_document_path, 'w') as f:
+            json.dump(data, f, indent=4)
+
+    def _load_apl_document(self):
         # type: (str) -> Dict[str, Any]
-        """Load the apl json document at the path into a dict object."""
-        with open(file_path) as f:
+        # Load the apl json document at the path into a dict object
+        with open(self.apl_document_path) as f:
             return json.load(f)
 
     def can_handle(self, handler_input):
@@ -78,11 +84,12 @@ class QueryMenuIntentHandler(AbstractRequestHandler):
         # Abfrage ob das Gerät APL unterstützt
         if get_supported_interfaces(handler_input).alexa_presentation_apl is not None:
             response_builder = handler_input.response_builder
-            #self.writeToJsonFile(speech_text)
+            # update apl document
+            self.writeToJsonFile(speech_text)
             response_builder.add_directive(
                 RenderDocumentDirective(
                     token="queryMenuToken",
-                    document=self._load_apl_document(self.apl_document_path)
+                    document=self._load_apl_document()
                 )
             )
 

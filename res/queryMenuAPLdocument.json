@@ -15,21 +15,45 @@
         ],
         "item": [
             {
-                "type": "AlexaHeadline",
-                "primaryText": "Willkommen zum Mensa-Skill",
-                "headerAttributionPrimacy": true,
-                "backgroundColor": "#099a0b",
-                "footerHintText": "Frage, \"Was gibt es heute zum Essen?\"",
-                "headerAttributionText": "HS-Worms",
-                "id": "PlantHeadline",
-                "speech": "<speak><amazon:emotion name='excited' intensity='medium'>Welcome to The Daily Plant Facts</amazon:emotion></speak>"
+                "type": "Container",
+                "height": "100vh",
+                "items": [
+                    {
+                        "type": "AlexaBackground",
+                        "backgroundColor": "#099a0b"
+                    },
+                    {
+                        "type": "Container",
+                        "height": "100vh",
+                        "width": "100vw",
+                        "items": [
+                            {
+                                "type": "AlexaHeader",
+                                "headerTitle": "Essensausgabe:",
+                                "headerAttributionText": "HS-Worms",
+                                "headerDivider": false
+                            },
+                            {
+                                "type": "ScrollView",
+                                "grow": 1,
+                                "paddingTop": "@spacingMedium",
+                                "paddingBottom": "${@spacing3XLarge + @spacingXSmall}",
+                                "paddingLeft": "@marginHorizontal",
+                                "paddingRight": "@marginHorizontal",
+                                "items": [
+                                    {
+                                        "type": "Text",
+                                        "id": "plantContent",
+                                        "style": "textStyleDisplay4",
+                                        "text": "Am Freitag den 10.12.2021 gibt es Gebackener Camembert mit Preiselbeeren, Berner R\u00f6sti, Gemischter Salatteller und dazu eine Tagessuppe und ein Dessert nach Wahl ",
+                                        "textAlign": "left"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             }
         ]
-    },
-    "onMount": [
-        {
-            "type": "SpeakItem",
-            "componentId": "PlantHeadline"
-        }
-    ]
+    }
 }
