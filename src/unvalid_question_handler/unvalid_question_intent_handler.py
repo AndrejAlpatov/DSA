@@ -21,7 +21,25 @@ class UnvalidQuestionIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
-        speech_text = ""
+        # Get DB collections
+        list_with_collections = data_bank_access(['answers_unvalid_questions'])
+        db_collection_answers = list_with_collections[0]
 
-        handler_input.response_builder.speak(speech_text).ask(speech_text)
+        # Get documents from collections
+        answers = db_collection_answers.find_one({})
+
+        # List of all answers
+        speech_text_list = answers['ANSWERS_UNVALID_QUESTIONS']
+
+        # Select random answer
+        list_index = randint(0, len(speech_text_list) - 1)
+        speech_text = speech_text_list[list_index]
+
+        # Select reprompt
+        reprompt = answers['REPROMPT_UNVALID_QUESTIONS']
+
+        # Concatenate the question proposition
+        speech_text += (" " + reprompt)
+
+        handler_input.response_builder.speak(speech_text).ask(reprompt)
         return handler_input.response_builder.response
