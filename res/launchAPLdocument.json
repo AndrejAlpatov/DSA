@@ -20,16 +20,8 @@
                 "headerAttributionPrimacy": true,
                 "backgroundColor": "#099a0b",
                 "footerHintText": "Frage, \"Was gibt es heute zum Essen?\"",
-                "headerAttributionText": "HS-Worms",
-                "id": "PlantHeadline",
-                "speech": "<speak><amazon:emotion name='excited' intensity='medium'>Welcome to The Daily Plant Facts</amazon:emotion></speak>"
+                "headerAttributionText": "HS-Worms"
             }
         ]
-    },
-    "onMount": [
-        {
-            "type": "SpeakItem",
-            "componentId": "PlantHeadline"
-        }
-    ]
+    }
 }
