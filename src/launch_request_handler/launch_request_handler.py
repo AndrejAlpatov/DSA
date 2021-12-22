@@ -34,6 +34,14 @@ class LaunchRequestHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
+        # Insert a user profile document in DB
+        user_profiles_collection_list = data_bank_access(['user_profiles'])
+        user_profiles_collection = user_profiles_collection_list[0]
+        user_profile_doc = {
+            'user_id': handler_input.request_envelope.context.system.user.user_id   # get user id
+        }
+        user_profiles_collection.insert_one(user_profile_doc)
+
         # Get DB collections
         list_with_collections = data_bank_access(['answers_launch'])
         db_collection_answers = list_with_collections[0]
