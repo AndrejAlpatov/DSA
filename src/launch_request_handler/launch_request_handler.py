@@ -10,6 +10,8 @@ from ask_sdk_model.ui import SimpleCard
 from ask_sdk_model import Response
 from ask_sdk_model.interfaces.alexa.presentation.apl import RenderDocumentDirective
 from src.data_bank_functions.output_of_all_collections import data_bank_access
+from src.ftp import FTPManager
+from src.xml_handler import XMLManager
 import res
 import json
 
@@ -42,7 +44,11 @@ class LaunchRequestHandler(AbstractRequestHandler):
         # Select answer
         speech_text = answers['STD_ANSWER']
 
-        #update_database() TODO: function in line 209
+        # files_to_read = FTPManager.check_for_new_data()
+        # if len(files_to_read) > 0:
+        # reader = XMLManager.XMLFileReader()
+        # for file in files_to_read:
+        #   reader.get_data("res\"+file)
 
         # Abfrage ob das Gerät APL unterstützt
         if get_supported_interfaces(handler_input).alexa_presentation_apl is not None:
