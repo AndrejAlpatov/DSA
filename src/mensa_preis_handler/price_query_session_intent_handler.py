@@ -25,7 +25,7 @@ class PriceQuerySessionIntentHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
 
         # Get DB collections
-        list_with_collections = data_bank_access(['sessions_price', 'answers_price'])
+        list_with_collections = data_bank_access(['sessions_mensa_price', 'answers_mensa_price'])
         db_collection_session = list_with_collections[0]
         db_collection_answers = list_with_collections[1]
 
