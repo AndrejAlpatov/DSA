@@ -5,7 +5,7 @@ import xml.dom.minidom
 
 # XMLFileReader Class bekommt einen XML Link und gibt uns die gewünschten Daten mithilfe von Funktionen zurück
 class XMLFileReader:
-    def __init__(self,xml_file):
+    def __init__(self):
         self.day = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
         self.CONNECTION_STRING = \
             "mongodb+srv://" + DB_USER + ":" + DB_PASS + "@mensaskill.2yqml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
