@@ -2,6 +2,7 @@ import paramiko
 
 
 def check_for_new_data():
+    #Hinzufügen des passenden Passwort und Username aus /src/data_bank_functions/file_for_internal_usage.py
     host, port = "", 22
     username, password = "", ""
 
