@@ -15,11 +15,15 @@ from src.xml_handler import XMLManager
 import res
 import json
 
+from pathlib import Path
+RELATIVE_PATH = '../../res/launchAPLdocument.json'
+path = Path(__file__).parent / RELATIVE_PATH
+
 
 class LaunchRequestHandler(AbstractRequestHandler):
     """Handler for Skill Launch."""
 
-    apl_document_path = "res/launchAPLdocument.json"
+    apl_document_path = path
 
     def _load_apl_document(self, file_path):
         # type: (str) -> Dict[str, Any]
