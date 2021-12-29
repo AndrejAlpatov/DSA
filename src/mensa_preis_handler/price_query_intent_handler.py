@@ -14,11 +14,23 @@ from src.data_bank_functions.output_of_all_collections import data_bank_access
 class PriceQueryIntentHandler(AbstractRequestHandler):
     """Handler for PriceQueryIntent."""
 
-    def activate_session(self, db_collection_session):
-        db_collection_session.update_one({"SESSION_ACTIVE": False}, {"$set": {"SESSION_ACTIVE": True}})
+    def activate_session(self, db_collection_session, user_id):
+        # if this user has a session document
+        if db_collection_session.count_documents({"USER_ID": user_id}) > 0:
+            # set the SESSION_ACTICE to true, where the USER_ID is user_id
+            db_collection_session.update_one({"USER_ID": user_id}, {"$set": {"SESSION_ACTIVE": True}})
 
-    def deactivate_session(self, db_collection_session):
-        db_collection_session.update_one({"SESSION_ACTIVE": True}, {"$set": {"SESSION_ACTIVE": False}})
+        # otherwise create a session document
+        else:
+            session_doc = {
+                "USER_ID": user_id,
+                "SESSION_ACTIVE": True
+            }
+            db_collection_session.insert_one(session_doc)
+
+    def deactivate_session(self, db_collection_session, user_id):
+        # set the SESSION_ACTIVE to false, where the USER_ID is user_id
+        db_collection_session.update_one({"USER_ID": user_id}, {"$set": {"SESSION_ACTIVE": False}})
 
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
@@ -27,13 +39,16 @@ class PriceQueryIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
+        # get user id
+        user_id = handler_input.request_envelope.context.system.user.user_id
+
         # Get DB collections
         list_with_collections = data_bank_access(['sessions_mensa_price', 'answers_mensa_price'])
         db_collection_session = list_with_collections[0]
         db_collection_answers = list_with_collections[1]
 
         # deactivate session if existing
-        self.deactivate_session(db_collection_session)
+        self.deactivate_session(db_collection_session, user_id)
 
         # Get documents from collections
         answers = db_collection_answers.find_one({})
@@ -50,17 +65,17 @@ class PriceQueryIntentHandler(AbstractRequestHandler):
             # Select answer
             speech_text = answers['STD_ANSWER']
             # activate session
-            self.activate_session(db_collection_session)
+            self.activate_session(db_collection_session, user_id)
 
         # if any value for num_days is given
         elif num_days is not None:
             speech_text = answers['NUM_DAYS_ANSWER']
-            self.activate_session(db_collection_session)
+            self.activate_session(db_collection_session, user_id)
 
         # day_price between montag and freitag -> price everyday the same and activate the price query session
         elif day == "montag" or day == "dienstag" or day == "mittwoch" or day == "donnerstag" or day == "freitag":
             speech_text = answers['NUM_DAYS_ANSWER']
-            self.activate_session(db_collection_session)
+            self.activate_session(db_collection_session, user_id)
 
         # day_price samstag or sonntag -> no food at weekend
         elif day == "samstag" or day == "sonntag" or day == "wochenende":
@@ -77,7 +92,7 @@ class PriceQueryIntentHandler(AbstractRequestHandler):
         # any timeindication -> activate the price query session
         elif timeindication is not None:
             speech_text = answers['TIMEINDIC_ANSWER']
-            self.activate_session(db_collection_session)
+            self.activate_session(db_collection_session, user_id)
 
         # something went wrong
         else:

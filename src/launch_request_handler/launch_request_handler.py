@@ -38,11 +38,21 @@ class LaunchRequestHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
+        # get user id
+        user_id = handler_input.request_envelope.context.system.user.user_id
+
+        # deactivate price_session if one is active
+        # 1. Get DB collections
+        list_with_collections = data_bank_access(['sessions_mensa_price'])
+        db_collection_session = list_with_collections[0]
+        # 2. set the SESSION_ACTIVE to false, where the USER_ID is user_id
+        db_collection_session.update_one({"USER_ID": user_id}, {"$set": {"SESSION_ACTIVE": False}})
+
         # Insert a user profile document in DB
         user_profiles_collection_list = data_bank_access(['user_profiles'])
         user_profiles_collection = user_profiles_collection_list[0]
         user_profile_doc = {
-            'user_id': handler_input.request_envelope.context.system.user.user_id   # get user id
+            'user_id': user_id
         }
         user_profiles_collection.insert_one(user_profile_doc)
 
