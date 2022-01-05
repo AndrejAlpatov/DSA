@@ -15,6 +15,7 @@ from src.mensa_preis_handler.price_query_session_intent_handler import PriceQuer
 from src.mensa_handler.query_menu_intent_handler import QueryMenuIntentHandler
 from src.launch_request_handler.launch_request_handler import LaunchRequestHandler
 from src.unvalid_question_handler.unvalid_question_intent_handler import UnvalidQuestionIntentHandler
+from src.help_intent_handler.help_intent_handler import HelpIntentHandler
 from flask import Flask
 from pymongo import MongoClient
 from ask_sdk_core.skill_builder import SkillBuilder
@@ -32,22 +33,6 @@ from ask_sdk_model import Response
 app = Flask(__name__)
 
 sb = SkillBuilder()
-
-
-class HelpIntentHandler(AbstractRequestHandler):
-    """Handler for Help Intent."""
-
-    def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
-        return is_intent_name("AMAZON.HelpIntent")(handler_input)
-
-    def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
-        speech_text = "You can say hello to me!"
-
-        handler_input.response_builder.speak(speech_text).ask(
-            speech_text).set_card(SimpleCard("Hello World", speech_text))
-        return handler_input.response_builder.response
 
 
 class CancelOrStopIntentHandler(AbstractRequestHandler):
