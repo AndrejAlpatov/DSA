@@ -20,33 +20,37 @@ class HelpIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        speech_text = "You can say hello to me! Ich wurde aufgerufen"
-
-        handler_input.response_builder.speak(speech_text).ask(
-            speech_text).set_card(SimpleCard("Hello World", speech_text))
-        return handler_input.response_builder.response
-
-"""
-    def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
 
         # Get DB collections
-        list_with_collections = data_bank_access(['answers_stud_werk'])
+        list_with_collections = data_bank_access(['answers_help'])
         db_collection_answers = list_with_collections[0]
 
         # Get documents from collections
         answers = db_collection_answers.find_one({})
 
         # List of all answers
-        speech_text_list = answers['OPERATOR_OF_MENSA']
+        speech_text_list = answers['STD_ANSWERS']
+        transfer_sentence = answers['TRANS_SENTENCE']
+        example_question_list = answers['EXAMPLE_QUESTIONS']
 
-        # Select random answer
+        # Select random std_answer
         list_index = randint(0, len(speech_text_list) - 1)
-        speech_text = speech_text_list[list_index]
+        std_answer = speech_text_list[list_index]
 
-        # Select reprompt
-        reprompt = answers['OPERATOR_OF_MENSA_REPROMPT']
+        # Select two random example_questions
+        while True:
+            list_index1 = randint(0, len(example_question_list) - 1)
+            list_index2 = randint(0, len(example_question_list) - 1)
+            # Check if the random indices aren't equal
+            if list_index1 != list_index2:
+                break
+        example_question1 = example_question_list[list_index1]
+        example_question2 = example_question_list[list_index2]
 
-        handler_input.response_builder.speak(speech_text).ask(reprompt)
+        # join the strings to an answer
+        speech_text = std_answer + " " + transfer_sentence + " " \
+                            "\"" + example_question1 + "\" oder \"" + example_question2 + "\""
+
+        handler_input.response_builder.speak(speech_text).ask(
+            speech_text).set_card(SimpleCard("Hello World", speech_text))
         return handler_input.response_builder.response
-"""
