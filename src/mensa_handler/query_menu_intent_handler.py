@@ -8,6 +8,7 @@ from ask_sdk_model.interfaces.alexa.presentation.apl import RenderDocumentDirect
 import res
 import json
 
+
 class QueryMenuIntentHandler(AbstractRequestHandler):
     """Handler for Question "was gibt es heute zum essen" """
 
