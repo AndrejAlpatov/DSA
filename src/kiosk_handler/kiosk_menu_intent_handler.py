@@ -4,11 +4,11 @@ from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_model import Response
 from random import randint
 from src.data_bank_functions.output_of_all_collections import data_bank_access
+from src.data_bank_functions.change_list_values_to_lower_case import list_value_to_low_case
 
 
 class KioskMenuIfIntentHandler(AbstractRequestHandler):
     """Handler for Question "gibt es was am Kiosk...?" """
-    # TODO: Für Marco oder Danny Antworten in DB überprüfen und neue Varianten einfügen
 
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
@@ -19,12 +19,12 @@ class KioskMenuIfIntentHandler(AbstractRequestHandler):
 
         # Get DB collections
         list_with_collections = data_bank_access(['kiosks_goods', 'answers', 'prompts'])
-        db_collection = list_with_collections[0]
+        db_collection_goods = list_with_collections[0]
         db_collection_answers = list_with_collections[1]
         db_collection_prompts = list_with_collections[2]
 
         # Get documents from collections
-        goods = db_collection.find_one({})
+        goods = db_collection_goods.find_one({})
         answers = db_collection_answers.find_one({})
         prompts = db_collection_prompts.find_one({})
 
@@ -32,13 +32,19 @@ class KioskMenuIfIntentHandler(AbstractRequestHandler):
         speech_text_positive_answers_list = answers['KIOSK_MENU_POSITIVE']
         speech_text_negative_answers_list = answers['KIOSK_MENU_NEGATIVE']
 
+        # Get lists from "goods" document in lower case for correctness of further comparisons
+        sweets = list_value_to_low_case(goods['SWEETS'])
+        hot_drinks = list_value_to_low_case(goods['HOT_DRINKS'])
+        cold_drinks = list_value_to_low_case(goods['COLD_DRINKS'])
+        food = list_value_to_low_case(goods['FOOD'])
+
         # Get slots values
         slots = handler_input.request_envelope.request.intent.slots
         food_type = slots['kiosk_menu'].value
 
         # If slot value has product name
-        if food_type in goods['SWEETS'] or food_type in goods['HOT_DRINKS'] or food_type in goods['COLD_DRINKS']:
-            # Zufällige Antwortauswahl aus der Liste
+        if food_type in sweets or food_type in hot_drinks or food_type in cold_drinks or food_type in food:
+            # Random answer selection from the list
             list_index = randint(0, len(speech_text_positive_answers_list) - 1)
             speech_text = speech_text_positive_answers_list[list_index]
 
@@ -64,7 +70,7 @@ class KioskMenuIfIntentHandler(AbstractRequestHandler):
 
         # If Product name is not in the lists
         else:
-            # Zufällige Antwortauswahl aus der Liste
+            # Random answer selection from the list
             list_index = randint(0, len(speech_text_negative_answers_list) - 1)
             speech_text = speech_text_negative_answers_list[list_index]
 
@@ -115,10 +121,11 @@ class KioskMenuWhatIntentHandler(AbstractRequestHandler):
         # Get slots values
         slots = handler_input.request_envelope.request.intent.slots
         food_type = slots['kiosk_menu'].value
+        print(slots)
 
         # If slot value is food category name
         if food_type in food_words:
-            # Zufällige Antwortauswahl aus der Liste
+            # Random answer selection from the list
             list_index = randint(0, len(speech_text_food_answers_list) - 1)
 
             # make string with all good's values for specific category
@@ -130,7 +137,7 @@ class KioskMenuWhatIntentHandler(AbstractRequestHandler):
 
         # If slot value is drink category name
         elif food_type in drink_words:
-            # Zufällige Antwortauswahl aus der Liste
+            # Random answer selection from the list
             list_index = randint(0, len(speech_text_drink_answers_list) - 1)
 
             # make string with all good's values for specific category
@@ -142,7 +149,7 @@ class KioskMenuWhatIntentHandler(AbstractRequestHandler):
 
         # If slot value is sweets category name
         elif food_type in sweets_words:
-            # Zufällige Antwortauswahl aus der Liste
+            # Random answer selection from the list
             list_index = randint(0, len(speech_text_sweets_answers_list) - 1)
 
             # make string with all good's values for specific category
@@ -152,9 +159,13 @@ class KioskMenuWhatIntentHandler(AbstractRequestHandler):
 
             speech_text = speech_text_sweets_answers_list[list_index] + ' ' + string_for_sweets_list
 
+        # If slot value is None (empty) Says all product categories
+        elif food_type is None:
+            speech_text = 'Am Kiosk kannst du warme und kalte Getränke sowie eine kleine Auswahl an Snacks kaufen'
+
         # If Product group name is not present in Kiosk
         else:
-            # Zufällige Antwortauswahl aus der Liste
+            # Random answer selection from the list
             list_index = randint(0, len(speech_text_negative_answers_list) - 1)
             speech_text = speech_text_negative_answers_list[list_index]
 
