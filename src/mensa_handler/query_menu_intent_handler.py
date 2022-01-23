@@ -7,12 +7,15 @@ from src.data_bank_functions.output_for_query_menu_intent import output_for_quer
 from ask_sdk_model.interfaces.alexa.presentation.apl import RenderDocumentDirective
 import res
 import json
+from pathlib import Path
+RELATIVE_PATH = '../../res/queryMenuAPLdocument.json'
+path = Path(__file__).parent / RELATIVE_PATH
 
 
 class QueryMenuIntentHandler(AbstractRequestHandler):
     """Handler for Question "was gibt es heute zum essen" """
 
-    apl_document_path = "res/queryMenuAPLdocument.json"
+    apl_document_path = path
 
     def writeToJsonFile(self, speech_text):
         # Load the apl json document at the path into a dict object
