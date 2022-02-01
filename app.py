@@ -28,8 +28,6 @@ from ask_sdk_model.ui import SimpleCard
 from ask_sdk_model import Response
 
 
-
-
 app = Flask(__name__)
 
 sb = SkillBuilder()
@@ -102,85 +100,6 @@ class CatchAllExceptionHandler(AbstractExceptionHandler):
 
         return handler_input.response_builder.response
 
-class RechenIntentHandler(AbstractRequestHandler):
-    """Handler for Hello World Intent."""
-
-    def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
-        return is_intent_name("RechenIntent")(handler_input)
-
-    def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
-
-        slots = handler_input.request_envelope.request.intent.slots
-        lhs = slots["lhs"].value
-        rhs = slots["rhs"].value
-
-        if rhs is None:
-            speech_text = "Kein Ergebnis, einfach  " + str(int(lhs))
-        else:
-            speech_text = "Das Ergebnis ist " + str(int(lhs) + int(rhs))
-
-        handler_input.response_builder.speak(speech_text)
-        return handler_input.response_builder.response
-
-class NamenAufDBSchreibenHandler(AbstractRequestHandler):
-    """Handler um einen Namen auf die DB zu schreiben."""
-
-    def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
-        return is_intent_name("NamenAufDBSchreiben")(handler_input)
-
-    def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
-
-        slots = handler_input.request_envelope.request.intent.slots
-        nameneu = slots["nameneu"].value
-
-        xnameDoc = {
-            'name': nameneu
-        }
-
-        xclient = MongoClient("mongodb+srv://testuser:12345@cluster0.ti92d.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-        database = xclient.get_database("new")
-
-        datumcol = database["neu"]
-        datumcol.insert_one(xnameDoc)
-
-        speech_text = "<prosody rate='x-fast' pitch='x-high'> Name " + nameneu + " auf Datenbank geschrieben </prosody>"
-
-        handler_input.response_builder.speak(speech_text).ask(speech_text)
-        return handler_input.response_builder.response
-
-class ReadNameFromDBHandler(AbstractRequestHandler):
-    """Handler um einen Namen von der DB zu lesen."""
-
-    def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
-        return is_intent_name("ReadNameFromDB")(handler_input)
-
-    def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
-
-        xclient = MongoClient("mongodb+srv://testuser:12345@cluster0.ti92d.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-        database = xclient.get_database("speiseplan")
-
-        slots = handler_input.request_envelope.request.intent.slots
-        name_in = slots["nameDB"].value
-
-        datumcol = database["datum"]
-        #document = datumcol.find({"name": name_in})            # brauchen wir hier nicht weil nicht auf die
-                                                                # Daten zugegriffen wird
-
-        #if document.count() > 0:           veraltet
-        if datumcol.count_documents({"name": name_in}) > 0:     # neue Schreibweise um die Anzahl der gefundenen
-                                                                # Dokumente zu erhalten
-            speech_text = "Der Name " + name_in + " ist in der Datenbank enthalten."
-        else:
-            speech_text = "Der Name " + name_in + " ist nicht in der Datenbank enthalten."
-
-        handler_input.response_builder.speak(speech_text).ask(speech_text)
-        return handler_input.response_builder.response
 
 #TODO: implementation of update_database()
 #def update_database():
@@ -201,13 +120,7 @@ sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())
 sb.add_request_handler(FallbackIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())
-
 sb.add_exception_handler(CatchAllExceptionHandler())
-
-# test
-sb.add_request_handler(RechenIntentHandler())
-sb.add_request_handler(NamenAufDBSchreibenHandler())
-sb.add_request_handler(ReadNameFromDBHandler())
 sb.add_request_handler(NamenDerDBAusgebenHandler())
 sb.add_request_handler(IsThereQuestionsHandler())
 sb.add_request_handler(OwnCupInKioskHandler())
