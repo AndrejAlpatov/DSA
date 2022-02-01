@@ -114,7 +114,7 @@ class CatchAllExceptionHandler(AbstractExceptionHandler):
             # xmlreader.get_data("res/"+filename) -> for schleife die aus allen neuen dokumenten die daten liest und auf db schreibt
 
 
-
+# add handlers to the skill builder
 sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())
