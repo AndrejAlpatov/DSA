@@ -1,23 +1,50 @@
 from datetime import datetime, timedelta
 
-
-# Get current week day. Values from 0 (Monday) to 6 (Sunday)
 def current_week_day():
+    """
+    The function returns the current week day
+
+    Returns:
+    weekday(int): The number from 0 to 6, which refers to the current week day
+    """
     return datetime.date(datetime.now()).weekday()
 
 
-# convert a string in format DD.MM.YYYY to a datetime obj
 def convert_string_to_datetime_object(date_as_string):
+    """
+    Converts a string in format DD.MM.YYYY to a datetime-object
+
+    Args:
+        date_as_string(string): String in format DD.MM.YYYY, that have to be converted to datetime-object
+
+    Returns:
+    date(datetime-object): date as datetime-object
+    """
     return datetime.strptime(date_as_string, '%d.%m.%Y')
 
 
-# convert datetime object to a string in format DD.MM:YYYY
 def convert_datetime_object_to_string(date_as_object):
+    """
+    Converts datetime object to a string in format DD.MM:YYYY
+    Args:
+        date_as_object(datetime): date as a datetime object
+
+    Returns:
+    date(string): date in a string format DD.MM:YYYY
+    """
     return date_as_object.strftime('%d.%m.%Y')
 
 
 # Get week day for particular date. Values from 0 (Monday) to 6 (Sunday)
 def week_day_for_date(date_as_str):
+    """
+
+    Args:
+        date_as_str():
+
+    Returns:
+
+    """
     # get date object from string in format DD.MM.YYYY
     date_obj = convert_string_to_datetime_object(date_as_str)
 

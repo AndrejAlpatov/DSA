@@ -6,6 +6,15 @@ import src.data_bank_functions.create_string_from_list_values as create_string
 
 
 def output_for_query_menu_intent(slot_value_ausgabe, date_for_output):
+    """
+
+    Args:
+        slot_value_ausgabe:
+        date_for_output:
+
+    Returns:
+
+    """
 
     # Get DB collection for negative answer
     list_with_collections = data_bank_access(['answers'])
