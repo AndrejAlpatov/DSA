@@ -107,6 +107,7 @@ class KioskMenuWhatIntentHandler(AbstractRequestHandler):
         speech_text_drink_answers_list = answers['WHAT_DRINKS_KIOSK']
         speech_text_sweets_answers_list = answers['WHAT_SWEETS_KIOSK']
         speech_text_negative_answers_list = answers['KIOSK_MENU_WHAT_NEGATIVE']
+        """test comment for variable"""
 
         # get lists of categories names
         food_words = goods['FOOD_WORD']

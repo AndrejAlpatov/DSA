@@ -46,7 +46,10 @@ def week_day_for_date(date_as_str):
 
     """
     # get date object from string in format DD.MM.YYYY
+    """test comment"""
     date_obj = convert_string_to_datetime_object(date_as_str)
+    """test comment"""
+
 
     return date_obj.weekday()
 
