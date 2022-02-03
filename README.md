@@ -42,6 +42,9 @@ Die Resourcen befinden sich zum Einen im Ordner `res` und zum Anderen in der `Cl
 #### Cloud-Datenbank MongoDB Atlas:
 - Daten des Speiseplans *(gefiltert aus der XML-Datei im Ordner `res`)*
 - Antworten/Output für die Intent-Handler
+##### Zugriff auf die Datenbank:
+Um auf die Datenbank zugreifen zu können, um im Ordner `data_bank_functions` eine Datei `file_for_internal_usage.py` angelegt werden, 
+die einen `MongoDB-Client` erstellt.
 
 ### Dokumention:
 Die Dokumentation besteht aus *zwei* Teilen:
