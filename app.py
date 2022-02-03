@@ -17,7 +17,6 @@ from src.launch_request_handler.launch_request_handler import LaunchRequestHandl
 from src.unvalid_question_handler.unvalid_question_intent_handler import UnvalidQuestionIntentHandler
 from src.help_intent_handler.help_intent_handler import HelpIntentHandler
 from flask import Flask
-from pymongo import MongoClient
 from ask_sdk_core.skill_builder import SkillBuilder
 from flask_ask_sdk.skill_adapter import SkillAdapter
 from ask_sdk_core.dispatch_components import AbstractRequestHandler

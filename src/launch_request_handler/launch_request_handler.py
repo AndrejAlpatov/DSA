@@ -1,18 +1,10 @@
-from flask import Flask
-from pymongo import MongoClient
-from ask_sdk_core.skill_builder import SkillBuilder
-from flask_ask_sdk.skill_adapter import SkillAdapter
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
-from ask_sdk_core.dispatch_components import AbstractExceptionHandler
-from ask_sdk_core.utils import is_request_type, is_intent_name, get_supported_interfaces
+from ask_sdk_core.utils import is_request_type, get_supported_interfaces
 from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_model.ui import SimpleCard
 from ask_sdk_model import Response
 from ask_sdk_model.interfaces.alexa.presentation.apl import RenderDocumentDirective
 from src.data_bank_functions.output_of_all_collections import data_bank_access
-from src.ftp import FTPManager
-from src.xml_handler import XMLManager
-import res
 import json
 
 from pathlib import Path
