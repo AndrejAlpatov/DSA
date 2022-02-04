@@ -1,10 +1,20 @@
 import paramiko
+from src.data_bank_functions.file_for_internal_usage import sftpHost, sftpPW, sftpUser
 
 
 def check_for_new_data():
-    #Hinzufügen des passenden Passwort und Username aus /src/data_bank_functions/file_for_internal_usage.py
-    host, port = "", 22
-    username, password = "", ""
+    """
+    Function that establishes a SSH connection to a SFTP-server which is then used to download data from the SFTP Server
+    when there is no new data nothing will be downloaded if there is new data the function will provide a list of all
+    the files that are new and download them to the res repository. The downloaded files will be moved to another
+    repository to be reused if something went wrong.
+
+    Returns: A List of files_to_fetch if there is new data or a empty list if there is no data
+
+    """
+    # Hinzufügen des passenden Passwort und Username aus /src/data_bank_functions/file_for_internal_usage.py
+    host, port = sftpHost, 22
+    username, password = sftpUser, sftpPW
 
     # Verbindungsaufbau zu SFTP Server per SSH
     ssh = paramiko.SSHClient()
@@ -35,4 +45,5 @@ def check_for_new_data():
         ssh.close()
         # wird später mit XML Reader eingelesen und in Datenbank gespeichert
         return files_to_fetch
-    else: return [] #wenn es keine neuen Dateien gibt soll eine leere Liste zurückgeben werden
+    else:
+        return []  # wenn es keine neuen Dateien gibt soll eine leere Liste zurückgeben werden
