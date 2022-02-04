@@ -19,10 +19,10 @@ class UnvalidQuestionIntentHandler(AbstractRequestHandler):
         a invalid question.
 
         Args:
-            handler_input: HandlerInput (no slot values)
+            handler_input(HandlerInput): The utterance that triggered the Intent (no slot values)
 
         Returns:
-            Response
+            handler_input.response_builder.response(Response): Response for the Intent
         """
 
         # Get DB collections
