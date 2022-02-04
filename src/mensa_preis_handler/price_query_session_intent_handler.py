@@ -1,20 +1,23 @@
-from flask import Flask
-from pymongo import MongoClient
-from ask_sdk_core.skill_builder import SkillBuilder
-from flask_ask_sdk.skill_adapter import SkillAdapter
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
-from ask_sdk_core.dispatch_components import AbstractExceptionHandler
-from ask_sdk_core.utils import is_request_type, is_intent_name
+from ask_sdk_core.utils import is_intent_name
 from ask_sdk_core.handler_input import HandlerInput
-from ask_sdk_model.ui import SimpleCard
 from ask_sdk_model import Response
-from random import randint
 from src.data_bank_functions.output_of_all_collections import data_bank_access
 
 class PriceQuerySessionIntentHandler(AbstractRequestHandler):
     """Handler for PriceQuerySessionIntent."""
 
     def deactivate_session(self, db_collection_session, user_id):
+        """
+        The method deactivates price sessions of the user, using the database.
+
+        Args:
+            db_collection_session(): An object of a DB collection, which stores user session documents
+            user_id(string): A unique user identifier
+
+        Returns:
+            void
+        """
         # set the SESSION_ACTIVE to false, where the USER_ID is user_id
         db_collection_session.update_one({"USER_ID": user_id}, {"$set": {"SESSION_ACTIVE": False}})
 
@@ -24,6 +27,17 @@ class PriceQuerySessionIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        """
+        If the user has an active price session, the method returns the price of the meal,
+        in relation to the given membership.
+
+        Args:
+            handler_input(HandlerInput): The utterance that triggered the Intent (1 slot value)
+            Slot: membership_price_session: 'Student', 'Gast', ...
+
+        Returns:
+            handler_input.response_builder.response(Response): Response for the Intent
+        """
 
         # get user id
         user_id = handler_input.request_envelope.context.system.user.user_id

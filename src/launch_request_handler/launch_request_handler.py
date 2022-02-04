@@ -1,18 +1,10 @@
-from flask import Flask
-from pymongo import MongoClient
-from ask_sdk_core.skill_builder import SkillBuilder
-from flask_ask_sdk.skill_adapter import SkillAdapter
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
-from ask_sdk_core.dispatch_components import AbstractExceptionHandler
-from ask_sdk_core.utils import is_request_type, is_intent_name, get_supported_interfaces
+from ask_sdk_core.utils import is_request_type, get_supported_interfaces
 from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_model.ui import SimpleCard
 from ask_sdk_model import Response
 from ask_sdk_model.interfaces.alexa.presentation.apl import RenderDocumentDirective
 from src.data_bank_functions.output_of_all_collections import data_bank_access
-from src.ftp import FTPManager
-from src.xml_handler import XMLManager
-import res
 import json
 
 from pathlib import Path
@@ -25,9 +17,18 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
     apl_document_path = path
 
-    def _load_apl_document(self, file_path):
+    def load_apl_document(self, file_path):
         # type: (str) -> Dict[str, Any]
-        """Load the apl json document at the path into a dict object."""
+        """
+        The method loads the apl json document at the path into a dict object.
+
+        Args:
+            file_path(string): The path to the apl json document.
+
+        Returns:
+            json.load(f)(dictionary): The apl document
+        """
+
         with open(file_path) as f:
             return json.load(f)
 
@@ -37,6 +38,16 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        """
+        The method greets the user and additionally explains the functionality of the skill,
+        if that user launches the skill for the fist time.
+
+        Args:
+            handler_input(HandlerInput): The utterance that triggered the Intent (no slot values)
+
+        Returns:
+            handler_input.response_builder.response(Response): Response for the Intent
+        """
 
         # get user id
         user_id = handler_input.request_envelope.context.system.user.user_id
@@ -78,7 +89,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
             response_builder.add_directive(
                 RenderDocumentDirective(
                     token="launchToken",
-                    document=self._load_apl_document(self.apl_document_path)
+                    document=self.load_apl_document(self.apl_document_path)
                 )
             )
 

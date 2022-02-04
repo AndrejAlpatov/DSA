@@ -8,7 +8,7 @@ from src.data_bank_functions.change_list_values_to_lower_case import list_value_
 
 
 class KioskMenuIfIntentHandler(AbstractRequestHandler):
-    """Handler for Question "gibt es was am Kiosk...?" """
+    """Handler for KioskMenuIfIntent """
 
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
@@ -16,6 +16,16 @@ class KioskMenuIfIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        """
+        The method returns 'Ja, ...' or 'Nein, ...' if special products are available in the kiosk or not.
+
+        Args:
+            handler_input(HandlerInput): The utterance that triggered the Intent (1 slot values)
+            Slot: kiosk_menu: 'zum trinken', 'süßwaren', ...
+
+        Returns:
+            handler_input.response_builder.response(Response): Response for the Intent
+        """
 
         # Get DB collections
         list_with_collections = data_bank_access(['kiosks_goods', 'answers', 'prompts'])
@@ -83,7 +93,7 @@ class KioskMenuIfIntentHandler(AbstractRequestHandler):
 
 
 class KioskMenuWhatIntentHandler(AbstractRequestHandler):
-    """Handler for Question "Was gibt es am Kiosk...?" """
+    """Handler for KioskMenuWhatIntent """
 
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
@@ -91,6 +101,16 @@ class KioskMenuWhatIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        """
+        The method returns a list of available products in the kiosk, in relation to the given product category.
+
+        Args:
+            handler_input(HandlerInput): The utterance that triggered the Intent (1 slot values)
+            Slot: kiosk_menu: 'zum trinken', 'süßwaren', ...
+
+        Returns:
+            handler_input.response_builder.response(Response): Response for the Intent
+        """
 
         # Get DB collections
         list_with_collections = data_bank_access(['kiosks_goods', 'answers'])
@@ -107,6 +127,7 @@ class KioskMenuWhatIntentHandler(AbstractRequestHandler):
         speech_text_drink_answers_list = answers['WHAT_DRINKS_KIOSK']
         speech_text_sweets_answers_list = answers['WHAT_SWEETS_KIOSK']
         speech_text_negative_answers_list = answers['KIOSK_MENU_WHAT_NEGATIVE']
+        """test comment for variable"""
 
         # get lists of categories names
         food_words = goods['FOOD_WORD']
