@@ -15,6 +15,16 @@ class HelpIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        """
+        The method explains the skill functionality and gives a list of utterance examples to the user,
+        if the user needs help.
+
+        Args:
+            handler_input(HandlerInput): The utterance that triggered the Intent (no slot values)
+
+        Returns:
+            handler_input.response_builder.response(Response): Response for the Intent
+        """
 
         # Get DB collections
         list_with_collections = data_bank_access(['answers_help'])
