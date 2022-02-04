@@ -1,4 +1,3 @@
-from src.kiosk_handler.namen_ausgeben_handler import NamenDerDBAusgebenHandler
 #from src.xml_reader.XMLReader import XMLFileReader as XMLReader
 #from src.ftp.FTPManager import *
 from src.kiosk_handler.additional_kiosk_questions_handler import OwnCupInKioskHandler
