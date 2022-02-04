@@ -14,6 +14,16 @@ class UnvalidQuestionIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        """
+        The method returns a notice, that the user asked
+        a invalid question.
+
+        Args:
+            handler_input(HandlerInput): The utterance that triggered the Intent (no slot values)
+
+        Returns:
+            handler_input.response_builder.response(Response): Response for the Intent
+        """
 
         # Get DB collections
         list_with_collections = data_bank_access(['answers_unvalid_questions'])

@@ -14,6 +14,15 @@ class OperatorOfMensaIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        """
+        The method returns the information, by who the mensa gets leaded.
+
+        Args:
+            handler_input(HandlerInput): The utterance that triggered the Intent (no slot values)
+
+        Returns:
+            handler_input.response_builder.response(Response): Response for the Intent
+        """
 
         # Get DB collections
         list_with_collections = data_bank_access(['answers_stud_werk'])

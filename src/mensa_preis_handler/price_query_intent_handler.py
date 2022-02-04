@@ -8,6 +8,16 @@ class PriceQueryIntentHandler(AbstractRequestHandler):
     """Handler for PriceQueryIntent."""
 
     def activate_session(self, db_collection_session, user_id):
+        """
+        The method activates the price session for user, using the database.
+
+        Args:
+            db_collection_session(): An object of a DB collection, which stores user session documents
+            user_id(string): A unique user identifier
+
+        Returns:
+            void
+        """
         # if this user has a session document
         if db_collection_session.count_documents({"USER_ID": user_id}) > 0:
             # set the SESSION_ACTICE to true, where the USER_ID is user_id
@@ -22,6 +32,16 @@ class PriceQueryIntentHandler(AbstractRequestHandler):
             db_collection_session.insert_one(session_doc)
 
     def deactivate_session(self, db_collection_session, user_id):
+        """
+        The method deactivates the price session of the user, using the database.
+
+        Args:
+            db_collection_session(): An object of a DB collection, which stores user session documents
+            user_id(string): A unique user identifier
+
+        Returns:
+            void
+        """
         # set the SESSION_ACTIVE to false, where the USER_ID is user_id
         db_collection_session.update_one({"USER_ID": user_id}, {"$set": {"SESSION_ACTIVE": False}})
 
@@ -31,6 +51,19 @@ class PriceQueryIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        """
+        The method returns the price of the meal, in relation to the membership.
+
+        Args:
+            handler_input(HandlerInput): The utterance that triggered the Intent (4 slot values)
+            Slot: day_price: 'Montag', 'Dienstag', ...
+            Slot: membership_price: 'Student', 'Gast', ...
+            Slot: timeindication_price: 'morgen', 'gestern', ...
+            Slot: num_days: '1', '2', ...
+
+        Returns:
+            handler_input.response_builder.response(Response): Response for the Intent
+        """
 
         # get user id
         user_id = handler_input.request_envelope.context.system.user.user_id

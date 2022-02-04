@@ -14,6 +14,16 @@ class StudierendenwerkOtherMensenIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        """
+        The method returns a list of other mensen, which are getting
+        leaded by the Studierendenwerk.
+
+        Args:
+            handler_input(HandlerInput): The utterance that triggered the Intent (no slot values)
+
+        Returns:
+            handler_input.response_builder.response(Response): Response for the Intent
+        """
 
         # Get DB collections
         list_with_collections = data_bank_access(['answers_stud_werk'])
