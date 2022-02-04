@@ -7,13 +7,14 @@ import src.data_bank_functions.create_string_from_list_values as create_string
 
 def output_for_query_menu_intent(slot_value_ausgabe, date_for_output):
     """
+    Returns particular "Ausgabe" for Ausgabe number == slot_value_ausgabe and date == date_for_output as a string
 
     Args:
-        slot_value_ausgabe:
-        date_for_output:
+        slot_value_ausgabe: Number of "Ausgabe" e.g. "Ausgabe 1", "2"
+        date_for_output(string): date in a string format DD.MM.YYY
 
     Returns:
-
+    Speech text for Alexa-response as a string
     """
 
     # Get DB collection for negative answer

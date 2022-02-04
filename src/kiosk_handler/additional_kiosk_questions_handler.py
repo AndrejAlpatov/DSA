@@ -5,7 +5,7 @@ from ask_sdk_model import Response
 from random import randint
 from src.data_bank_functions.output_of_all_collections import data_bank_access
 
-# TODO: Passwort weglassen
+
 class OwnCupInKioskHandler(AbstractRequestHandler):
     """ Handler for OwnCupInKioskHandler """
 
