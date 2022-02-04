@@ -7,7 +7,7 @@ from src.data_bank_functions.output_of_all_collections import data_bank_access
 
 
 class OpeningHoursIntentHandler(AbstractRequestHandler):
-    """Handler for Question "ab wie viel uhr kann ich in der {mensa_department} essen"""
+    """Handler for OpeningHoursIntent """
 
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
@@ -15,6 +15,16 @@ class OpeningHoursIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        """
+        The method returns opening hours, in relation to the given department.
+
+        Args:
+            handler_input(HandlerInput): The utterance that triggered the Intent (1 slot values)
+            Slot: mensa_department: 'mensa', 'kiosk', ...
+
+        Returns:
+            handler_input.response_builder.response(Response): Response for the Intent
+        """
 
         # TODO: Stub for other intents
         # from datetime import datetime

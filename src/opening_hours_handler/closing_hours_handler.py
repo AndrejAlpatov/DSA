@@ -8,7 +8,7 @@ import src.data_bank_functions.time_functions as time_func
 
 
 class ClosingHoursIntentHandler(AbstractRequestHandler):
-    """Handler for Question "bis wie viel uhr kann ich in der {mensa_department} essen" """
+    """Handler for ClosingHoursIntent """
 
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
@@ -16,6 +16,16 @@ class ClosingHoursIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        """
+        The method returns closing hours, in relation to the given department.
+
+        Args:
+            handler_input(HandlerInput): The utterance that triggered the Intent (1 slot values)
+            Slot: mensa_department: 'mensa', 'kiosk', ...
+
+        Returns:
+            handler_input.response_builder.response(Response): Response for the Intent
+        """
 
         # Get current week day. Values from 0 (Monday) to 6 (Sunday)
         current_week_day = time_func.current_week_day()
