@@ -5,7 +5,6 @@ from ask_sdk_model import Response
 import src.data_bank_functions.time_functions as time_func
 from src.data_bank_functions.output_for_query_menu_intent import output_for_query_menu_intent
 from ask_sdk_model.interfaces.alexa.presentation.apl import RenderDocumentDirective
-import res
 import json
 from pathlib import Path
 RELATIVE_PATH = '../../res/queryMenuAPLdocument.json'
@@ -13,11 +12,22 @@ path = Path(__file__).parent / RELATIVE_PATH
 
 
 class QueryMenuIntentHandler(AbstractRequestHandler):
-    """Handler for Question "was gibt es heute zum essen" """
+    """ Handler for QueryMenuIntent """
 
     apl_document_path = path
 
     def writeToJsonFile(self, speech_text):
+        """
+        The method loads the apl json document and updates the entry of the meal attribute.
+
+        Args:
+            speech_text(string): The text, which is a part of the response of the intent, is
+                used to update the apl json document
+
+        Returns:
+            void
+        """
+
         # Load the apl json document at the path into a dict object
         with open(self.apl_document_path) as f:
             data = json.load(f)
@@ -29,9 +39,18 @@ class QueryMenuIntentHandler(AbstractRequestHandler):
         with open(self.apl_document_path, 'w') as f:
             json.dump(data, f, indent=4)
 
-    def _load_apl_document(self):
+    def load_apl_document(self):
         # type: (str) -> Dict[str, Any]
-        # Load the apl json document at the path into a dict object
+        """
+        The method loads the apl json document at the path into a dict object.
+
+        Args:
+            file_path(string): The path to the apl json document.
+
+        Returns:
+            json.load(f)(dictionary): The apl document
+        """
+
         with open(self.apl_document_path) as f:
             return json.load(f)
 
@@ -41,6 +60,20 @@ class QueryMenuIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+        """
+        The method returns the meal, in relation to the date and ausgabe.
+
+        Args:
+            handler_input(HandlerInput): The utterance that triggered the Intent (5 slot values)
+            Slot: date_for_menu_query: '2022-02-04', '2022-01-29', ...
+            Slot: week_day: 'Montag', 'Dienstag', ...
+            Slot: time_indication: 'morgen', 'gestern', ...
+            Slot: ausgabe: 'eins', 'zwei', ...
+            Slot: number_of_days_ahead: '2', '3', ...
+
+        Returns:
+            handler_input.response_builder.response(Response): Response for the Intent
+        """
 
         # Get slots values
         slots = handler_input.request_envelope.request.intent.slots
@@ -51,7 +84,7 @@ class QueryMenuIntentHandler(AbstractRequestHandler):
         slot_value_days_ahead = slots['number_of_days_ahead'].value
 
         if slot_value_date_for_menu_query is not None:
-            # if slot value is in "AMAZON.DATE format
+            # if slot value is in AMAZON.DATE format
 
             # convert to type DD:MM:YYYY
             date_as_string = time_func.correction_of_date_string(slot_value_date_for_menu_query)
@@ -93,7 +126,7 @@ class QueryMenuIntentHandler(AbstractRequestHandler):
             response_builder.add_directive(
                 RenderDocumentDirective(
                     token="queryMenuToken",
-                    document=self._load_apl_document()
+                    document=self.load_apl_document()
                 )
             )
 
