@@ -1,3 +1,5 @@
+""" This module contains an interfaces for the MongoDB Cloud Atlas """
+
 from src.data_bank_functions.file_for_internal_usage import client_mongoDB
 
 

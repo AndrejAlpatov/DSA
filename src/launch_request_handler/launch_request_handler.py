@@ -1,3 +1,5 @@
+""" This module contains the handler for the Skill Launch """
+
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.utils import is_request_type, get_supported_interfaces
 from ask_sdk_core.handler_input import HandlerInput

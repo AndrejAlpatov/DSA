@@ -1,3 +1,5 @@
+""" This module contains a helper function for list value manipulations """
+
 def list_value_to_low_case(list_in):
     """
     Get a string from lowercase and uppercase characters and returns a new
@@ -9,7 +11,7 @@ def list_value_to_low_case(list_in):
         list that comprises strings in lower case
     """
 
-    # list fot output
+    # list for output
     return_list = []
 
     # append to output lists strings in lowercase

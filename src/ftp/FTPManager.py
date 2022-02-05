@@ -1,3 +1,5 @@
+""" This module contains an interface to the FTP-Server """
+
 import paramiko
 from src.data_bank_functions.file_for_internal_usage import sftpHost, sftpPW, sftpUser
 

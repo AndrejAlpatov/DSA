@@ -1,3 +1,5 @@
+""" This module contains a helper function for database access for ./output_for_query_menu_intent.py """
+
 from src.data_bank_functions.output_of_all_collections import data_bank_access
 import src.data_bank_functions.time_functions as time_func
 
@@ -23,7 +25,7 @@ def get_menus_from_db(date_as_str):
     # Get all documents from collection, where field "date" = date_as_str
     documents_from_collection = db_collection_current_week_menu.find({'date': date_as_str})
 
-    list_with_menus = []  # list, to witch all arrays with menu will be append
+    list_with_menus = []  # list, to which all arrays with menu will be append
 
     # extract menu-arrays from documents and append to list
     for document in documents_from_collection:

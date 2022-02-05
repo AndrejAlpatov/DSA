@@ -1,3 +1,5 @@
+""" This module contains the handler for the OpeningHoursIntent """
+
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.utils import is_intent_name
 from ask_sdk_core.handler_input import HandlerInput
