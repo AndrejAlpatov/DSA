@@ -24,7 +24,7 @@
                             Module Index
                         </a>
 
-                        <img src="/home/danny/Documents/3.Semester/DSA/MensaSkill/DSA/doc/doc_logo.png" class="logo" alt="project logo"/>
+                        <img src="../../../doc_logo.png" class="logo" alt="project logo"/>
 
                         <input type="search" placeholder="Search..." role="searchbox" aria-label="search"
                                pattern=".+" required>
@@ -129,8 +129,7 @@ src<wbr>.help_intent_handler<wbr>.help_intent_handler    </h1>
         <span class="n">speech_text</span> <span class="o">=</span> <span class="n">std_answer</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">transfer_sentence</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> \
                             <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">example_question1</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> oder </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">example_question2</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
 
-        <span class="n">handler_input</span><span class="o">.</span><span class="n">response_builder</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="n">speech_text</span><span class="p">)</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span>
-            <span class="n">speech_text</span><span class="p">)</span><span class="o">.</span><span class="n">set_card</span><span class="p">(</span><span class="n">SimpleCard</span><span class="p">(</span><span class="s2">&quot;Hello World&quot;</span><span class="p">,</span> <span class="n">speech_text</span><span class="p">))</span>
+        <span class="n">handler_input</span><span class="o">.</span><span class="n">response_builder</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="n">speech_text</span><span class="p">)</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="n">speech_text</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">handler_input</span><span class="o">.</span><span class="n">response_builder</span><span class="o">.</span><span class="n">response</span>
 </pre></div>
 
@@ -198,8 +197,7 @@ src<wbr>.help_intent_handler<wbr>.help_intent_handler    </h1>
         <span class="n">speech_text</span> <span class="o">=</span> <span class="n">std_answer</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">transfer_sentence</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> \
                             <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">example_question1</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> oder </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">example_question2</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
 
-        <span class="n">handler_input</span><span class="o">.</span><span class="n">response_builder</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="n">speech_text</span><span class="p">)</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span>
-            <span class="n">speech_text</span><span class="p">)</span><span class="o">.</span><span class="n">set_card</span><span class="p">(</span><span class="n">SimpleCard</span><span class="p">(</span><span class="s2">&quot;Hello World&quot;</span><span class="p">,</span> <span class="n">speech_text</span><span class="p">))</span>
+        <span class="n">handler_input</span><span class="o">.</span><span class="n">response_builder</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="n">speech_text</span><span class="p">)</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="n">speech_text</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">handler_input</span><span class="o">.</span><span class="n">response_builder</span><span class="o">.</span><span class="n">response</span>
 </pre></div>
 
@@ -303,8 +301,7 @@ inside Handler Input.</p>
         <span class="n">speech_text</span> <span class="o">=</span> <span class="n">std_answer</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">transfer_sentence</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> \
                             <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">example_question1</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> oder </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">example_question2</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
 
-        <span class="n">handler_input</span><span class="o">.</span><span class="n">response_builder</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="n">speech_text</span><span class="p">)</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span>
-            <span class="n">speech_text</span><span class="p">)</span><span class="o">.</span><span class="n">set_card</span><span class="p">(</span><span class="n">SimpleCard</span><span class="p">(</span><span class="s2">&quot;Hello World&quot;</span><span class="p">,</span> <span class="n">speech_text</span><span class="p">))</span>
+        <span class="n">handler_input</span><span class="o">.</span><span class="n">response_builder</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="n">speech_text</span><span class="p">)</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="n">speech_text</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">handler_input</span><span class="o">.</span><span class="n">response_builder</span><span class="o">.</span><span class="n">response</span>
 </pre></div>
 
