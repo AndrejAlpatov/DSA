@@ -7,12 +7,12 @@ from src.data_bank_functions.output_for_query_menu_with_additives_intent \
     import output_for_query_menu_with_additives_intent
 
 
-class QueryMenuWithAddativesIntentHandler(AbstractRequestHandler):
+class QueryMenuWithAdditivesIntentHandler(AbstractRequestHandler):
     """Handler for Question "was gibt es heute mit [Zusatzstoff] zum essen" """
 
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return is_intent_name("QueryMenuWithAdditivesIntent")(handler_input)
+        return is_intent_name("QueryMenuWithAdditives")(handler_input)
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
@@ -39,7 +39,7 @@ class QueryMenuWithAddativesIntentHandler(AbstractRequestHandler):
         slot_value_week_day = slots['WEEKDAY'].value
         slot_value_time_indication = slots['TIMEINDICATION'].value
         slot_value_days_ahead = slots['NUMBEROFDAYSAHEAD'].value
-        slot_value_with_or_without = slots['WITHORWITHOUT']
+        slot_value_with_or_without = slots['WITHORWITHOUT'].value
         slot_value_for_additives = slots['ADDITIVES'].value
 
         if slot_value_date is not None:

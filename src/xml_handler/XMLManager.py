@@ -16,7 +16,7 @@ class XMLFileReader:
 
         """
         self.day = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
-        self.client = client_mongoDB()
+        self.client = client_mongoDB
         self.database = self.client.get_database("MensaSkill")
 
     def get_weekday(self, essen):

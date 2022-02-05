@@ -51,20 +51,17 @@ def output_for_query_menu_with_additives_intent(date, additive, with_or_without)
     # Get all documents from collection, where field "date" = date
     documents_from_collection = db_collection_current_week_menu.find({'date': date})
 
-    # check value of with_or_without and append the mensa_output that fits the value of with or with_or_without
-    if with_or_without == "mit":
-        for document in documents_from_collection:
-            if additive in document['zusatzstoffe']:
-                list_mensa_output.append(document['ausgabe'])
-            else:
-                continue
-
-    if with_or_without == "ohne":
-        for document in documents_from_collection:
-            if additive in document['zusatzstoffe']:
-                continue
-            else:
-                list_mensa_output.append(document['ausgabe'])
+    # for loop to get the mensa_output where the meal with the additives is provided
+    for document in documents_from_collection:
+        #creat a list with all additives of the document['zusatzstoffe'] entry
+        list_for_additives = document['zusatzstoffe'].lower().split(", ")
+        # check value of with_or_without and append the mensa_output that fits the value of with or with_or_without
+        if additive in list_for_additives and with_or_without == 'mit':
+            list_mensa_output.append(document['ausgabe'])
+        elif additive not in list_for_additives and with_or_without == 'ohne':
+            list_mensa_output.append(document['ausgabe'])
+        else:
+            continue
 
     # Create a speech_text dependent on the length of the list_mensa_output
     if len(list_mensa_output) > 1:
@@ -76,7 +73,7 @@ def output_for_query_menu_with_additives_intent(date, additive, with_or_without)
                       " " + additive
 
     else:
-        speech_text = "Am " + week_day_as_str + " den " + date + " gibt es an " + list_mensa_output[0] + \
+        speech_text = "Am " + week_day_as_str + " den " + date + " gibt es an Ausgabe " + list_mensa_output[0] + \
                       " ein Gericht " + with_or_without + " " + additive
 
     return speech_text
