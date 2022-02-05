@@ -43,7 +43,7 @@ class CancelOrStopIntentHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         speech_text = "Auf wiedersehen und guten Appetit!"
 
-        handler_input.response_builder.speak(speech_text)
+        handler_input.response_builder.speak(speech_text).set_should_end_session(True)
         return handler_input.response_builder.response
 
 
