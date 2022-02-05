@@ -6,8 +6,10 @@ from ask_sdk_model import Response
 from ask_sdk_model.interfaces.alexa.presentation.apl import RenderDocumentDirective
 from src.data_bank_functions.output_of_all_collections import data_bank_access
 import json
-
 from pathlib import Path
+from src.ftp import FTPManager
+from src.xml_handler import XMLManager
+
 RELATIVE_PATH = '../../res/launchAPLdocument.json'
 path = Path(__file__).parent / RELATIVE_PATH
 
@@ -59,29 +61,32 @@ class LaunchRequestHandler(AbstractRequestHandler):
         # 2. set the SESSION_ACTIVE to false, where the USER_ID is user_id
         db_collection_session.update_one({"USER_ID": user_id}, {"$set": {"SESSION_ACTIVE": False}})
 
-        # Insert a user profile document in DB
-        user_profiles_collection_list = data_bank_access(['user_profiles'])
-        user_profiles_collection = user_profiles_collection_list[0]
-        user_profile_doc = {
-            'user_id': user_id
-        }
-        user_profiles_collection.insert_one(user_profile_doc)
-
         # Get DB collections
         list_with_collections = data_bank_access(['answers_launch'])
         db_collection_answers = list_with_collections[0]
 
-        # Get documents from collections
+        # Get documents from collections answer
         answers = db_collection_answers.find_one({})
 
-        # Select answer
-        speech_text = answers['STD_ANSWER']
+        # Insert a user profile document in DB
+        user_profiles_collection_list = data_bank_access(['user_profiles'])
+        user_profiles_collection = user_profiles_collection_list[0]
+        if user_profiles_collection.find_one({'user_id': user_id}) is None:
+            user_profile_doc = {
+                'user_id': user_id
+            }
+            user_profiles_collection.insert_one(user_profile_doc)
 
-        # files_to_read = FTPManager.check_for_new_data()
-        # if len(files_to_read) > 0:
-        # reader = XMLManager.XMLFileReader()
-        # for file in files_to_read:
-        #   reader.get_data("res\"+file)
+            speech_text = answers['STD_ANSWER']
+
+        else:
+            speech_text = answers['USER_KNOWN_ANSWER']
+
+        files_to_read = FTPManager.check_for_new_data()
+        reader = XMLManager.XMLFileReader()
+        if len(files_to_read) > 0:
+            for file in files_to_read:
+                reader.get_data("res\\" + file)
 
         # Abfrage ob das Gerät APL unterstützt
         if get_supported_interfaces(handler_input).alexa_presentation_apl is not None:
@@ -97,3 +102,25 @@ class LaunchRequestHandler(AbstractRequestHandler):
             SimpleCard("Hello World", speech_text)).set_should_end_session(
             False)
         return handler_input.response_builder.response
+
+
+def get_answer(answer_name):
+    """
+    Function that returns the answer string form the database according to its key value
+
+    Args:
+        answer_name: Name of the key for the answer in the Database Document
+
+    Returns:
+        String from Database
+    """
+    # Get DB collections
+    list_with_collections = data_bank_access(['answers_launch'])
+    db_collection_answers = list_with_collections[0]
+
+    # Get documents from collections
+    answers = db_collection_answers.find_one({})
+
+    # Select answer
+    speech_text = answers[answer_name]
+    return speech_text

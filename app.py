@@ -1,5 +1,3 @@
-#from src.xml_reader.XMLReader import XMLFileReader as XMLReader
-#from src.ftp.FTPManager import *
 from src.kiosk_handler.additional_kiosk_questions_handler import OwnCupInKioskHandler
 from src.kiosk_handler.kiosk_menu_intent_handler import KioskMenuWhatIntentHandler, KioskMenuIfIntentHandler
 from src.opening_hours_handler.opening_hours_handler import OpeningHoursIntentHandler
@@ -12,6 +10,7 @@ from src.studierendenwerk_handler.studierendenwerk_other_mensen_intent_handler i
 from src.mensa_preis_handler.price_query_intent_handler import PriceQueryIntentHandler
 from src.mensa_preis_handler.price_query_session_intent_handler import PriceQuerySessionIntentHandler
 from src.mensa_handler.query_menu_intent_handler import QueryMenuIntentHandler
+from src.mensa_handler.query_menu_with_additives_handler import QueryMenuWithAdditivesIntentHandler
 from src.launch_request_handler.launch_request_handler import LaunchRequestHandler
 from src.unvalid_question_handler.unvalid_question_intent_handler import UnvalidQuestionIntentHandler
 from src.help_intent_handler.help_intent_handler import HelpIntentHandler
@@ -98,19 +97,6 @@ class CatchAllExceptionHandler(AbstractExceptionHandler):
         return handler_input.response_builder.response
 
 
-#TODO: implementation of update_database()
-#def update_database():
-    # tcpcon = tcpcon()
-    # if(tcpcon.check_dir()): #true wenn datei vorhanden
-        # filenames = tcpcon.get_filenames() -> liste aller dokumente?
-        # download file -> for schleife die alle dokumente runterläd
-        # for filename in filenames:
-            # tcpcon.mv("filename,../Done") -> schleife die Files aus Filename in Done ordner verschiebt
-        # xmlreader = xmlreader()
-        # for filename in filenames:
-            # xmlreader.get_data("res/"+filename) -> for schleife die aus allen neuen dokumenten die daten liest und auf db schreibt
-
-
 # add handlers to the skill builder
 sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(HelpIntentHandler())
@@ -132,7 +118,7 @@ sb.add_request_handler(PriceQueryIntentHandler())
 sb.add_request_handler(PriceQuerySessionIntentHandler())
 sb.add_request_handler(QueryMenuIntentHandler())
 sb.add_request_handler(UnvalidQuestionIntentHandler())
-
+sb.add_request_handler(QueryMenuWithAdditivesIntentHandler())
 
 skill_adapter = SkillAdapter(
     skill=sb.create(), skill_id=1, app=app)
