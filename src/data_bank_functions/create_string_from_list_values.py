@@ -1,8 +1,12 @@
-""" This module contains a helper function for ./output_for_query_menu_intent.py """
+"""
+This module contains a helper function for combining list elements
+to one string, that gets appended to a new list
+"""
+
 
 def create_strings_from_list_values(list_menus):
     """
-    Makes strings from list for every element in input parameter
+    Combines input parameter elements to one string, that gets appended to a new list
 
     Args:
         list_menus(List): A list with all menu components (database entries)

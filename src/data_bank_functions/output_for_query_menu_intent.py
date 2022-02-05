@@ -1,4 +1,4 @@
-""" This module contains a help function for ../mensa_handler/query_menu_intent_handler.py """
+""" This module calculates outputs for the QueryMenuIntent """
 
 from random import randint
 from src.data_bank_functions.output_of_all_collections import data_bank_access

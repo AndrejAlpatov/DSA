@@ -1,4 +1,4 @@
-""" This module parses the data out of the file '../res/speiseplanstw.xml """
+""" This module parses the data out of xml files and transfers them to the database """
 
 import datetime
 import xml.dom.minidom

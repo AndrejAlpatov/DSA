@@ -1,4 +1,4 @@
-""" This module contains a help function for ../mensa_handler/query_menu_with_additives_handler.py """
+""" This module calculates outputs for the QueryMenuWithAdditivesIntent """
 
 from random import randint
 from src.data_bank_functions.get_menu_from_db import get_menus_from_db

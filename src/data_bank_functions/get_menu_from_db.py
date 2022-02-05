@@ -1,4 +1,4 @@
-""" This module contains a helper function for database access for ./output_for_query_menu_intent.py """
+""" This module contains a function to get the menu entries for particular date from the database """
 
 from src.data_bank_functions.output_of_all_collections import data_bank_access
 import src.data_bank_functions.time_functions as time_func
