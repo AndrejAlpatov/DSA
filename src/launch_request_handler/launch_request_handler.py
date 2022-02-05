@@ -71,6 +71,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
         # Insert a user profile document in DB
         user_profiles_collection_list = data_bank_access(['user_profiles'])
         user_profiles_collection = user_profiles_collection_list[0]
+        # check if there is already a UserProfile with the user_id Varibale
         if user_profiles_collection.find_one({'user_id': user_id}) is None:
             user_profile_doc = {
                 'user_id': user_id
@@ -80,11 +81,16 @@ class LaunchRequestHandler(AbstractRequestHandler):
             speech_text = answers['STD_ANSWER']
 
         else:
+            # create KnownUser because there already is a UserProfile
             speech_text = answers['USER_KNOWN_ANSWER']
 
+        # create a list with files that need to be read by the XMLReader
         files_to_read = FTPManager.check_for_new_data()
+        # creat XMLReader to Read XML Files
         reader = XMLManager.XMLFileReader()
+        # if there are no files in files to read we dont need to commit to the for loop
         if len(files_to_read) > 0:
+            # reader will read every document in the res ordner that is in the list and create databank entries
             for file in files_to_read:
                 reader.get_data("res\\" + file)
 
@@ -102,25 +108,3 @@ class LaunchRequestHandler(AbstractRequestHandler):
             SimpleCard("Hello World", speech_text)).set_should_end_session(
             False)
         return handler_input.response_builder.response
-
-
-def get_answer(answer_name):
-    """
-    Function that returns the answer string form the database according to its key value
-
-    Args:
-        answer_name: Name of the key for the answer in the Database Document
-
-    Returns:
-        String from Database
-    """
-    # Get DB collections
-    list_with_collections = data_bank_access(['answers_launch'])
-    db_collection_answers = list_with_collections[0]
-
-    # Get documents from collections
-    answers = db_collection_answers.find_one({})
-
-    # Select answer
-    speech_text = answers[answer_name]
-    return speech_text

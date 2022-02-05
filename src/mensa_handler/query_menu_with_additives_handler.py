@@ -47,7 +47,8 @@ class QueryMenuWithAdditivesIntentHandler(AbstractRequestHandler):
 
             # convert to type DD:MM:YYYY
             date_as_string = time_func.correction_of_date_string(slot_value_date)
-            # text for output according date and number of menu
+            # text for output according date and date_for_output, slot_value_for_additives,
+            #                                                                       slot_value_with_or_without
             speech_text = output_for_query_menu_with_additives_intent(date_as_string, slot_value_for_additives,
                                                                       slot_value_with_or_without)
 
@@ -56,7 +57,8 @@ class QueryMenuWithAdditivesIntentHandler(AbstractRequestHandler):
 
             # date of the week day received as an input parameter
             date_of_slot_value = time_func.get_date_for_week_day_of_current_week(slot_value_week_day)
-            # text for output according date and number of menu
+            # text for output according date and date_for_output, slot_value_for_additives,
+            #                                                                       slot_value_with_or_without
             speech_text = output_for_query_menu_with_additives_intent(date_of_slot_value, slot_value_for_additives,
                                                                       slot_value_with_or_without)
 
@@ -65,7 +67,8 @@ class QueryMenuWithAdditivesIntentHandler(AbstractRequestHandler):
 
             # date of the week day that was indicated with a slot value
             date_for_output = time_func.get_date_for_time_indication_values(slot_value_time_indication)
-            # text for output according date and number of menu
+            # text for output according date and date_for_output, slot_value_for_additives,
+            #                                                                       slot_value_with_or_without
             speech_text = output_for_query_menu_with_additives_intent(date_for_output, slot_value_for_additives,
                                                                       slot_value_with_or_without)
 

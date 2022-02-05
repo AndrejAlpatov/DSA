@@ -9,7 +9,7 @@ def output_for_query_menu_with_additives_intent(date, additive, with_or_without)
     Function to help us find the fitting output for the QueryMenuWithAdditivesIntent with the given Arguments.
     Args:
         date(string): A date in the DD.MM.YYYY format
-        additive(string): One of the values that the ADDITIVE slot overs
+        additive(string): One of the values that the ADDITIVE slot offers
         with_or_without(string): either has the value "mit" or "ohne"
     Returns:
         A fitting speech_text(String) for the given arguments.
@@ -53,7 +53,7 @@ def output_for_query_menu_with_additives_intent(date, additive, with_or_without)
 
     # for loop to get the mensa_output where the meal with the additives is provided
     for document in documents_from_collection:
-        #creat a list with all additives of the document['zusatzstoffe'] entry
+        # creat a list with all additives of the document['zusatzstoffe'] entry
         list_for_additives = document['zusatzstoffe'].lower().split(", ")
         # check value of with_or_without and append the mensa_output that fits the value of with or with_or_without
         if additive in list_for_additives and with_or_without == 'mit':
@@ -64,14 +64,15 @@ def output_for_query_menu_with_additives_intent(date, additive, with_or_without)
             continue
 
     # Create a speech_text dependent on the length of the list_mensa_output
+    # more than 1 implies both meals have/don't have a certain additive
     if len(list_mensa_output) > 1:
         speech_text = "Am " + week_day_as_str + " den " + date + " gibt es an beiden Ausgaben ein essen " + \
                       with_or_without + " " + additive
-
+    # 0 implies no meal contains/dosnt contain a certain additive
     elif len(list_mensa_output) == 0:
         speech_text = "Am " + week_day_as_str + " den " + date + " gibt es kein essen " + with_or_without + \
                       " " + additive
-
+    # else means there is only 1 meal with/without a certain additive
     else:
         speech_text = "Am " + week_day_as_str + " den " + date + " gibt es an Ausgabe " + list_mensa_output[0] + \
                       " ein Gericht " + with_or_without + " " + additive
