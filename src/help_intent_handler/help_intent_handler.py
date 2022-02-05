@@ -58,6 +58,5 @@ class HelpIntentHandler(AbstractRequestHandler):
         speech_text = std_answer + " " + transfer_sentence + " " \
                             "\"" + example_question1 + "\" oder \"" + example_question2 + "\""
 
-        handler_input.response_builder.speak(speech_text).ask(
-            speech_text).set_card(SimpleCard("Hello World", speech_text))
+        handler_input.response_builder.speak(speech_text).ask(speech_text)
         return handler_input.response_builder.response
