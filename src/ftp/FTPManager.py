@@ -37,7 +37,6 @@ def check_for_new_data():
 
         # Download der neuen Files & verschieben der Files in Done Ordner
         for file in files_to_fetch:
-            print(file)
             sftp.get('/Speiseplandaten/' + file, 'res\\' + file)
             sftp.rename('/Speiseplandaten/' + file, '/Done/' + file)
 

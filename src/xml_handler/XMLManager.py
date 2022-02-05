@@ -65,13 +65,17 @@ class XMLFileReader:
         """
         doc = xml.dom.minidom.parse(xml_file)
         row = doc.getElementsByTagName("ROW")
+        #loop that iterates over all rows of the document
         for essen in row:
+            #picks all rows where DPORTNAME is Mensa Worms
             if essen.getAttribute("DPORTNAME") == "Mensa Worms":
                 component_list = []
 
+                # for loop that arranges the components of a meal
                 for i in range(1, 8):
                     component_list.append(essen.getAttribute("ATEXTOHNEZSZ" + str(i)))
 
+                #insertion of a document into the database collection of the according calender week
                 get_coll = self.database.getCollection(self.calc_calender_week(essen))
                 get_coll.insertOne(
                     {"date": essen.getAttribute("PRODDATUM"), "weekday": self.get_weekday(essen),
