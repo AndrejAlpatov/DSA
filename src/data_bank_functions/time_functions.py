@@ -1,3 +1,5 @@
+""" This module contains functions to manage time and date formats """
+
 from datetime import datetime, timedelta
 
 

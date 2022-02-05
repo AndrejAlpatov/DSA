@@ -1,3 +1,5 @@
+""" This is the main module for the mensa skill """
+
 from src.kiosk_handler.additional_kiosk_questions_handler import OwnCupInKioskHandler
 from src.kiosk_handler.kiosk_menu_intent_handler import KioskMenuWhatIntentHandler, KioskMenuIfIntentHandler
 from src.opening_hours_handler.opening_hours_handler import OpeningHoursIntentHandler

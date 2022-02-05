@@ -1,3 +1,5 @@
+""" This module calculates outputs for the QueryMenuIntent """
+
 from random import randint
 from src.data_bank_functions.output_of_all_collections import data_bank_access
 import src.data_bank_functions.time_functions as time_func
@@ -11,7 +13,7 @@ def output_for_query_menu_intent(slot_value_ausgabe, date_for_output):
 
     Args:
         slot_value_ausgabe: Number of "Ausgabe" e.g. "Ausgabe 1", "2"
-        date_for_output(string): date in a string format DD.MM.YYY
+        date_for_output(string): date in a string format DD.MM.YYYY
 
     Returns:
     Speech text for Alexa-response as a string

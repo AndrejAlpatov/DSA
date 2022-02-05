@@ -1,3 +1,5 @@
+""" This module calculates outputs for the QueryMenuWithAdditivesIntent """
+
 from random import randint
 from src.data_bank_functions.get_menu_from_db import get_menus_from_db
 from src.data_bank_functions.output_of_all_collections import data_bank_access

@@ -1,3 +1,5 @@
+""" This module parses the data out of xml files and transfers them to the database """
+
 import datetime
 import xml.dom.minidom
 from src.data_bank_functions.file_for_internal_usage import client_mongoDB
